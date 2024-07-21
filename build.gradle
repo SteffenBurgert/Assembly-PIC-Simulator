@@ -1,0 +1,24 @@
+plugins {
+	id 'java'
+}
+
+group = 'assembly_pic_simulator'
+version = '0.0.1'
+
+java {
+	sourceCompatibility = '21'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+	testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.25.3'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

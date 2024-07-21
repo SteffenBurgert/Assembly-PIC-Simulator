@@ -1,0 +1,15 @@
+                    00001           ;testReadFileLST
+                    00002
+                    00003  start
+0000 3011           00004           movlw 11h           ;W = 11h
+0001 3930           00005           andlw 30h           ;W = 10h, C=x, DC=x, Z=0
+0002 380D           00006           iorlw 0Dh           ;W = 1Dh, C=x, DC=x, Z=0
+0003 3C3D           00007           sublw 3Dh           ;W = 20h, C=1, DC=1, Z=0
+0004 3A20           00008           xorlw 20h           ;W = 00h, C=1, DC=1, Z=1
+0005 3E25           00009           addlw 25h           ;W = 25h, C=0, DC=0, Z=0
+                    00010
+                    00011           
+                    00012  ende
+0006 2806           00013           goto ende
+                    00014
+                    00015
