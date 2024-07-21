@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="main-body">
+  <div class="router-outlet">
+    <router-outlet></router-outlet>
+  </div>
+
+  <footer>
+    <div class="footer-alignment">
+      <div class="footer-wrap">
+        <p>&copy; {{ currentYear }} |&nbsp;</p>
+        <a href="/impressum">Impressum</a>
+        <p>&nbsp;|&nbsp;</p>
+        <a href="/datenschutzerklaerung">Datenschutzerklärung</a>
+      </div>
+      <div *ngIf="gitBranchName !== undefined">
+        <p>FE-Branch: {{ gitBranchName }}</p>
+      </div>
+    </div>
+  </footer>
+</div>

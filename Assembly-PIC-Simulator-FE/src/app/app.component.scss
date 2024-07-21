@@ -1,0 +1,44 @@
+.mat-toolbar-single-row {
+  flex-direction: column;
+  height: 100vh;
+  width: 4vw;
+  background-color: var(--primary-blue);
+}
+
+.main-body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.mat-icon {
+  color: var(--white);
+}
+
+.router-outlet {
+  height: 95vh;
+}
+
+footer {
+  display: flex;
+  height: 5vh;
+  background-color: var(--secondary-blue);
+}
+
+.footer-alignment {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 12px 10px 0;
+  color: var(--white);
+
+  a {
+    color: var(--white);
+  }
+}
+
+.footer-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+}
