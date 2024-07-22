@@ -10,6 +10,7 @@ $sidebar-width: 4vw;
 .main-body {
   display: flex;
   flex-direction: column;
+  margin-left: $sidebar-width;
   width: 100%;
 }
 
@@ -44,12 +45,12 @@ $sidebar-width: 4vw;
 }
 
 .router-outlet {
-  height: 95vh;
+  height: calc(95vh - 2 * 1vw);
+  margin: 1vw 1vw;
 }
 
 footer {
   display: flex;
-  margin-left: $sidebar-width;
   height: 5vh;
   background-color: var(--secondary-blue);
 }
