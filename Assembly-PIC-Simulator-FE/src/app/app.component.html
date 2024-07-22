@@ -1,5 +1,8 @@
-<mat-toolbar>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+<mat-toolbar class="navbar-left" [ngClass]="{'navbar-open': isNavbarLeftOpen}">
+  <button mat-icon-button class="logo_button">
+    <img src="../assets/image/asm_logo.png" alt="asm_logo">
+  </button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="toggleNavbar()">
     <mat-icon>menu</mat-icon>
   </button>
 </mat-toolbar>

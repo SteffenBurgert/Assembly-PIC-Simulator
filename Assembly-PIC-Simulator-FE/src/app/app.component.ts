@@ -19,8 +19,13 @@ export class AppComponent implements OnInit {
   title = 'Assembly-PIC-Simulator';
   gitBranchName: string | undefined;
   currentYear = new Date().getFullYear();
+  isNavbarLeftOpen: boolean = false;
 
   ngOnInit(): void {
     this.gitBranchName = environment.gitBranch;
+  }
+
+  public toggleNavbar(): void {
+    this.isNavbarLeftOpen = !this.isNavbarLeftOpen;
   }
 }
