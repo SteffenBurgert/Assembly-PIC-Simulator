@@ -1,0 +1,96 @@
+<main>
+  <section class="header">
+    <button mat-raised-button>File</button>
+    <div class="header__mid">
+      <button mat-raised-button>Run</button>
+      <button mat-raised-button>Stop</button>
+      <button mat-raised-button>Step</button>
+      <button mat-raised-button>Reset</button>
+      <div>
+        <p>Timer</p>
+      </div>
+    </div>
+    <p>Real life speed:</p>
+  </section>
+  <section class="main-section">
+    <section class="main-grid-section">
+      <article class="code-table">
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!-- Position Column -->
+            <ng-container matColumnDef="debugger" sticky class="mat-column-debugger">
+              <mat-header-cell *matHeaderCellDef> 
+                <span class="material-symbols-outlined">bug_report</span>
+            </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.debugger}} </mat-cell>
+            </ng-container>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="line" sticky class="mat-column-line">
+              <mat-header-cell *matHeaderCellDef> Line </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.line}} </mat-cell>
+            </ng-container>
+          
+            <!-- Weight Column -->
+            <ng-container matColumnDef="opcode" sticky class="mat-column-opcode">
+              <mat-header-cell *matHeaderCellDef> Opcode </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.opcode}} </mat-cell>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="assembly_code" sticky>
+              <mat-header-cell *matHeaderCellDef> Assembly Code </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.assembly_code}} </mat-cell>
+            </ng-container>
+          
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+      </article>
+      <article class="imortant-information">
+        <dl class="dl-row__list">
+            <dd>W-Register:</dd>
+            <dt>0x0000</dt>
+        </dl>
+        <dl class="dl-row__list">
+            <dd>PC:</dd>
+            <dt>0x0000</dt>
+        </dl>
+        <dl class="dl-row__list">
+            <dd>PCL:</dd>
+            <dt>0x0000</dt>
+        </dl>
+        <dl class="dl-row__list">
+            <dd>PCLATH:</dd>
+            <dt>0x0000</dt>
+        </dl>
+        <dl class="dl-row__list">
+            <dd>C:</dd>
+            <dt>0x0000</dt>
+        </dl>
+        <dl class="dl-row__list">
+            <dd>DC:</dd>
+            <dt>0x0000</dt>
+        </dl>
+        <dl class="dl-row__list">
+            <dd>Z:</dd>
+            <dt>0x0000</dt>
+        </dl>
+      </article>
+      <article class="register-table">
+        <mat-tab-group>
+            <mat-tab label="SPR"> SFR </mat-tab>
+            <mat-tab label="GPR"> GPR </mat-tab>
+            <mat-tab label="Stack"> Stack </mat-tab>
+            <mat-tab label="I/O-Ports"> I/O-Ports </mat-tab>
+          </mat-tab-group>
+      </article>
+    </section>
+  </section>
+  <section class="footer">
+    <hr>
+    <mat-form-field class="console-text">
+      <mat-label>Console</mat-label>
+      <textarea matInput placeholder="Console"></textarea>
+    </mat-form-field>
+  </section>
+</main>

@@ -45,6 +45,7 @@ $sidebar-width: 4vw;
 }
 
 .router-outlet {
+  display: flex;
   height: calc(95vh - 2 * 1vw);
   margin: 1vw 1vw;
 }
