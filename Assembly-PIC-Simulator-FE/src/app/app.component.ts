@@ -9,7 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { environment } from './envirnonment/environment';
 
 @Component({
-  selector: 'app-root',
+  selector: 'asm-pic-root',
   standalone: true,
   imports: [CommonModule, RouterOutlet, MatIconModule, MatButtonModule, MatToolbarModule],
   templateUrl: './app.component.html',
