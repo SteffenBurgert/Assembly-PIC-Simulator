@@ -1,0 +1,81 @@
+.simulator-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    text-align: left;
+    padding: var(--size-2) var(--size-4);
+
+    background-color: var(--secondary-blue);
+    color: var(--white);
+    font-size: 1.2em;
+    font-weight: var(--font-weight-7);
+  }
+
+  td {
+    padding: 0 var(--size-4);
+  }
+
+  tr {
+    padding: var(--size-2) 0;
+    border-bottom: var(--border-size-1) solid var(--gray);
+  }
+
+  tr:last-child {
+    border-bottom: none;
+  }
+}
+
+.io-pins-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  ::ng-deep .mdc-button {
+    min-width: var(--size-12);
+  }
+
+  button {
+    height: var(--size-16);
+
+    margin: var(--size-4) 0;
+  }
+
+  th {
+    padding: var(--size-2) var(--size-4);
+
+    background-color: var(--secondary-blue);
+    color: var(--white);
+    font-size: 1.2em;
+    font-weight: var(--font-weight-7);
+  }
+
+  td {
+    text-align: center;
+    padding: 0 var(--size-4);
+  }
+
+  tr {
+    padding: var(--size-2) 0;
+    border-bottom: var(--border-size-1) solid var(--gray);
+  }
+
+  tr:last-child {
+    border-bottom: none;
+  }
+
+  th:first-child,
+  td:first-child {
+    text-align: left;
+  }
+}
+
+.th__first {
+  border-top-left-radius: var(--border-radius-1);
+}
+
+.th__last {
+  border-top-right-radius: var(--border-radius-1);
+}

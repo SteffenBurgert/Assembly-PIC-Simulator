@@ -26,36 +26,28 @@
           io__code_table__closed: !isIOopen,
         }"
       >
-        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-          <!-- Position Column -->
-          <ng-container matColumnDef="debugger" sticky class="mat-column-debugger">
-            <mat-header-cell *matHeaderCellDef>
-              <span class="material-symbols-outlined">bug_report</span>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.debugger }} </mat-cell>
-          </ng-container>
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="line" sticky class="mat-column-line">
-            <mat-header-cell *matHeaderCellDef> Line </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.line }} </mat-cell>
-          </ng-container>
-
-          <!-- Weight Column -->
-          <ng-container matColumnDef="opcode" sticky class="mat-column-opcode">
-            <mat-header-cell *matHeaderCellDef> Opcode </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.opcode }} </mat-cell>
-          </ng-container>
-
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="assembly_code" sticky>
-            <mat-header-cell *matHeaderCellDef> Assembly Code </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.assembly_code }} </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-        </mat-table>
+        <mat-card appearance="outlined" class="code-table__mat-card-content">
+          <mat-card-content>
+            <table class="simulator-table">
+              <thead>
+                <th class="th__first"><span class="material-symbols-outlined">bug_report</span></th>
+                <th>Line</th>
+                <th>Opcode</th>
+                <th class="th__last">Assembly Code</th>
+              </thead>
+              <tbody>
+                @for (item of dataSource; track $index) {
+                  <tr>
+                    <td>{{ item.debugger }}</td>
+                    <td>{{ item.line }}</td>
+                    <td>{{ item.opcode }}</td>
+                    <td>{{ item.assembly_code }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </mat-card-content>
+        </mat-card>
       </article>
       <article class="imortant-information">
         <dl class="dl-row__list">
@@ -94,262 +86,269 @@
           io__closed: !isIOopen,
         }"
       >
-        <mat-tab-group>
-          <mat-tab label="SFR">
-            <div class="register-tab"
-            [ngClass]="{
-              io__register_tab__open: isIOopen,
-              io__register_tab__closed: !isIOopen
-            }">
-              <table>
-                <thead>
-                  <th>Name</th>
-                  <th>Address</th>
-                  <th>Value (Hex)</th>
-                  <th>Value (Binary)</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>INDF</td>
-                    <td>0x00</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>TMRO</td>
-                    <td>0x01</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>PCL</td>
-                    <td>0x02</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>Status</td>
-                    <td>0x03</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>FSR</td>
-                    <td>0x04</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>PORTA</td>
-                    <td>0x05</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>PORTB</td>
-                    <td>0x06</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>0x07</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>EEDATA</td>
-                    <td>0x08</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>EEADR</td>
-                    <td>0x09</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>PCLATH</td>
-                    <td>0x0A</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>INTCON</td>
-                    <td>0x0B</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                </tbody>
-              </table>
-              <table>
-                <thead>
-                  <th>Name</th>
-                  <th>Address</th>
-                  <th>Value (Hex)</th>
-                  <th>Value (Binary)</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>INDF</td>
-                    <td>0x80</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>OPTION_ REG</td>
-                    <td>0x81</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>PCL</td>
-                    <td>0x82</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>Status</td>
-                    <td>0x83</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>FSR</td>
-                    <td>0x84</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>TRISA</td>
-                    <td>0x85</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>TRISB</td>
-                    <td>0x86</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>0x87</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>EECON1</td>
-                    <td>0x88</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>EECON2</td>
-                    <td>0x89</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>PCLATH</td>
-                    <td>0x8A</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>INTCON</td>
-                    <td>0x8B</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </mat-tab>
-          <mat-tab label="GPR">
-            <div class="register-tab"
-            [ngClass]="{
-              io__register_tab__open: isIOopen,
-              io__register_tab__closed: !isIOopen
-            }">
-              <table>
-                <thead>
-                  <th>Address</th>
-                  <th>Value (Hex)</th>
-                  <th>Value (Binary)</th>
-                </thead>
-                <tbody>
-                  @for (item of gprValues; track $index) {
-                    <tr>
-                      <td>0x00</td>
-                      <td>0x00</td>
-                      <td>00000000</td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
-            </div>
-          </mat-tab>
-          <mat-tab label="Stack">
-            <div class="register-tab"
-            [ngClass]="{
-              io__register_tab__open: isIOopen,
-              io__register_tab__closed: !isIOopen
-            }"
-            >
-              <table>
-                <thead>
-                  <th>Position</th>
-                  <th>Value (Hex)</th>
-                  <th>Value (Binary)</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>0</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>6</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                  <tr>
-                    <td>7</td>
-                    <td>0x00</td>
-                    <td>00000000</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
+        <mat-card appearance="outlined" class="register-table__mat-card-content">
+          <mat-card-content>
+            <mat-tab-group>
+              <mat-tab label="SFR">
+                <div
+                  class="register-tab"
+                  [ngClass]="{
+                    io__register_tab__open: isIOopen,
+                    io__register_tab__closed: !isIOopen,
+                  }"
+                >
+                  <table class="simulator-table">
+                    <thead>
+                      <th>Name</th>
+                      <th>Address</th>
+                      <th>Value (Hex)</th>
+                      <th>Value (Binary)</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>INDF</td>
+                        <td>0x00</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>TMRO</td>
+                        <td>0x01</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>PCL</td>
+                        <td>0x02</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>Status</td>
+                        <td>0x03</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>FSR</td>
+                        <td>0x04</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>PORTA</td>
+                        <td>0x05</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>PORTB</td>
+                        <td>0x06</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>0x07</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>EEDATA</td>
+                        <td>0x08</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>EEADR</td>
+                        <td>0x09</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>PCLATH</td>
+                        <td>0x0A</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>INTCON</td>
+                        <td>0x0B</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                    </tbody>
+                    <thead>
+                      <th>Name</th>
+                      <th>Address</th>
+                      <th>Value (Hex)</th>
+                      <th>Value (Binary)</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>INDF</td>
+                        <td>0x80</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>OPTION_ REG</td>
+                        <td>0x81</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>PCL</td>
+                        <td>0x82</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>Status</td>
+                        <td>0x83</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>FSR</td>
+                        <td>0x84</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>TRISA</td>
+                        <td>0x85</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>TRISB</td>
+                        <td>0x86</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>0x87</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>EECON1</td>
+                        <td>0x88</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>EECON2</td>
+                        <td>0x89</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>PCLATH</td>
+                        <td>0x8A</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>INTCON</td>
+                        <td>0x8B</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </mat-tab>
+              <mat-tab label="GPR">
+                <div
+                  class="register-tab"
+                  [ngClass]="{
+                    io__register_tab__open: isIOopen,
+                    io__register_tab__closed: !isIOopen,
+                  }"
+                >
+                  <table class="simulator-table">
+                    <thead>
+                      <th>Address</th>
+                      <th>Value (Hex)</th>
+                      <th>Value (Binary)</th>
+                    </thead>
+                    <tbody>
+                      @for (item of gprValues; track $index) {
+                        <tr>
+                          <td>0x00</td>
+                          <td>0x00</td>
+                          <td>0b00000000</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </mat-tab>
+              <mat-tab label="Stack">
+                <div
+                  class="register-tab"
+                  [ngClass]="{
+                    io__register_tab__open: isIOopen,
+                    io__register_tab__closed: !isIOopen,
+                  }"
+                >
+                  <table class="simulator-table">
+                    <thead>
+                      <th>Position</th>
+                      <th>Value (Hex)</th>
+                      <th>Value (Binary)</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>6</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                      <tr>
+                        <td>7</td>
+                        <td>0x00</td>
+                        <td>0b00000000</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
       </article>
     </section>
   </section>
@@ -358,10 +357,7 @@
       <mat-card-content>
         <div class="io-header-container">
           <div class="io-header-content">
-            <span>Port</span>
-          </div>
-          <div class="io-header-content tris-container">
-            <div><span>Tris</span></div>
+            <span class="io-pins">I/O-Pins</span>
             <button mat-raised-button (click)="toggleIsIOopen()">
               @if (isIOopen) {
                 <span class="material-symbols-outlined">arrow_drop_down</span>
@@ -372,11 +368,11 @@
           </div>
         </div>
         @if (isIOopen) {
-          <div class="io-header-container">
+          <div class="io-header-container io-header-container__open">
             <div class="io-header-content">
-              <table>
+              <table class="io-pins-table">
                 <thead>
-                  <th>Port</th>
+                  <th class="th__first">Port</th>
                   <th>7</th>
                   <th>6</th>
                   <th>5</th>
@@ -384,7 +380,7 @@
                   <th>3</th>
                   <th>2</th>
                   <th>1</th>
-                  <th>0</th>
+                  <th class="th__last">0</th>
                 </thead>
                 <tbody>
                   <tr>
@@ -392,30 +388,30 @@
                     <td>X</td>
                     <td>X</td>
                     <td>X</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
                   </tr>
                   <tr>
                     <td>B</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div class="io-header-content">
-              <table>
+              <table class="io-pins-table">
                 <thead>
-                  <th>Tris</th>
+                  <th class="th__first">Tris</th>
                   <th>7</th>
                   <th>6</th>
                   <th>5</th>
@@ -423,7 +419,7 @@
                   <th>3</th>
                   <th>2</th>
                   <th>1</th>
-                  <th>0</th>
+                  <th class="th__last">0</th>
                 </thead>
                 <tbody>
                   <tr>
@@ -431,22 +427,22 @@
                     <td>X</td>
                     <td>X</td>
                     <td>X</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
                   </tr>
                   <tr>
                     <td>B</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
+                    <td><button mat-raised-button>0</button></td>
                   </tr>
                 </tbody>
               </table>

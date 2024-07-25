@@ -1,3 +1,5 @@
+@use '../../style/table.scss';
+
 $main-content-width: 94vw;
 
 main {
@@ -38,29 +40,46 @@ main {
 }
 
 .code-table {
-  display: flex;
   grid-column: 1;
-  overflow: scroll;
+  display: flex;
+  flex: 1;
+}
+
+.code-table__mat-card-content {
+  width: 100%;
+  overflow: auto;
+
+  mat-card-content {
+    padding: 0;
+  }
+
+  .th__first {
+    border-top-left-radius: var(--size-3);
+  }
+
+  .th__last {
+    border-top-right-radius: var(--size-3);
+  }
 }
 
 .io {
   &__code_table {
     &__open {
-      height: 50vh;
+      height: 46vh;
     }
 
     &__closed {
-      height: 59vh;
+      height: 58vh;
     }
   }
 
   &__register_tab {
     &__open {
-      height: 44vh;
+      height: 40vh;
     }
 
     &__closed {
-      height: 53vh;
+      height: 52vh;
     }
   }
 }
@@ -106,6 +125,7 @@ main {
 .dl-row__list {
   display: flex;
   justify-content: space-between;
+  margin: var(--size-4) 0;
 
   dt,
   dd {
@@ -121,19 +141,39 @@ main {
   grid-column: 3;
 }
 
+.register-table__mat-card-content {
+  mat-card-content {
+    padding: 0 var(--size-4);
+  }
+}
+
 .register-tab {
   overflow: auto;
+}
+
+::ng-deep mat-tab-header {
+  margin-bottom: var(--size-2);
 }
 
 .io-header-container {
   display: flex;
   flex-direction: row;
+  gap: var(--size-10);
+
+  &__open {
+    padding-top: var(--size-10);
+  }
 }
 
 .io-header-content {
   display: flex;
+  width: 100%;
+  justify-content: space-between;
   align-items: center;
-  width: 50%;
+}
+
+.io-pins {
+  font-weight: var(--font-weight-7);
 }
 
 .tris-container {
@@ -152,6 +192,15 @@ main {
 .footer {
   display: flex;
   flex-direction: column;
+
+  .simulator-table {
+    button {
+      height: var(--size-16);
+      width: var(--size-17);
+
+      margin: var(--size-4) 0;
+    }
+  }
 }
 
 hr {
