@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 
 const ELEMENT_DATA: any[] = [
   { debugger: '', line: '', opcode: '', assembly_code: '00001           ;testReadFileLST' },
@@ -50,11 +52,26 @@ const ELEMENT_DATA: any[] = [
 @Component({
   selector: 'asm-pic-simulator',
   standalone: true,
-  imports: [MatButtonModule, MatTableModule, MatFormFieldModule, MatInputModule, MatTabsModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTabsModule,
+    MatCardModule,
+  ],
   templateUrl: './simulator.component.html',
   styleUrl: './simulator.component.scss',
 })
 export class SimulatorComponent {
   displayedColumns: string[] = ['debugger', 'line', 'opcode', 'assembly_code'];
   dataSource = ELEMENT_DATA;
+
+  isIOopen: boolean = false;
+  gprValues: number[] = [];
+
+  public toggleIsIOopen(): void {
+    this.isIOopen = !this.isIOopen;
+  }
 }

@@ -1,14 +1,9 @@
 $main-content-width: 94vw;
 
-:host {
-  display: flex;
-}
-
 main {
   display: flex;
   flex-direction: column;
   gap: 1vw;
-  width: $main-content-width;
 }
 
 .header {
@@ -17,14 +12,24 @@ main {
 
   &__mid {
     display: flex;
+    align-items: center;
     gap: 1vw;
+  }
+}
+
+.speed-input {
+  height: var(--size-21);
+  width: var(--size-24);
+
+  ::ng-deep .mat-mdc-form-field-infix {
+    padding-top: var(--size-8) !important;
   }
 }
 
 .main-section {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  max-height: 60vh;
 }
 
 .main-grid-section {
@@ -33,9 +38,31 @@ main {
 }
 
 .code-table {
+  display: flex;
   grid-column: 1;
   overflow: scroll;
-  max-height: 68vh;
+}
+
+.io {
+  &__code_table {
+    &__open {
+      height: 50vh;
+    }
+
+    &__closed {
+      height: 59vh;
+    }
+  }
+
+  &__register_tab {
+    &__open {
+      height: 44vh;
+    }
+
+    &__closed {
+      height: 53vh;
+    }
+  }
 }
 
 .mat-header-cell {
@@ -94,6 +121,34 @@ main {
   grid-column: 3;
 }
 
+.register-tab {
+  overflow: auto;
+}
+
+.io-header-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.io-header-content {
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+.tris-container {
+  justify-content: space-between;
+
+  button {
+    height: 28px !important;
+    font-size: 28px !important;
+  }
+
+  .mat-mdc-card-content {
+    padding: var(--size-8) !important;
+  }
+}
+
 .footer {
   display: flex;
   flex-direction: column;
@@ -102,7 +157,7 @@ main {
 hr {
   width: $main-content-width;
   height: 0.4vw;
-  border-radius: 16px;
+  border-radius: var(--border-radius-4);
   border: none;
   background: var(--secondary-blue);
 }
