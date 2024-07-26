@@ -1,13 +1,15 @@
 package assembly.pic.simulator.akku;
 
+import assembly.pic.simulator.model.FileUpload;
+
 import java.util.*;
 
 public class AssemblyFile {
 
-    private List<String> file = new ArrayList<>();
+    private List<FileUpload> file = new ArrayList<>();
     private Map<Integer, Integer> operations = new HashMap<>();
 
-    public void setFile(List<String> file) {
+    public void setFile(List<FileUpload> file) {
         this.file = file;
     }
 
@@ -15,7 +17,7 @@ public class AssemblyFile {
         this.operations = operations;
     }
 
-    public List<String> getFile() {
+    public List<FileUpload> getFileUpload() {
         return file;
     }
 

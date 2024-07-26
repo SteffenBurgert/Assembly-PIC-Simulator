@@ -44,7 +44,7 @@ export class SimulatorComponent {
     if (file) {
       const formData = new FormData();
 
-      formData.append(file.name, file);
+      formData.append('file', file);
 
       this.uploadFileService
         .uploadFile(formData)

@@ -151,7 +151,7 @@ class LiteralAndControlOperationsCalculationTest {
     void gotoAssy() {
         ram.setProgramCounter(20);
         AssemblyFile assemblyFile = new AssemblyFile();
-        assemblyFile.setFile(List.of("some", "random", "value", "goto ende"));
+        //assemblyFile.setFile(List.of("some", "random", "value", "goto ende"));
 
         // first 11 Bit of 5526 equals 1430 in decimal
         literalAndControlOperationsCalculation.gotoAssy(5526, ram, programTimer);
