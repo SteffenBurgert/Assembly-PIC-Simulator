@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Assembly-PIC-Simulator-FE": {
+    "frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/assembly-pic-simulator-fe",
+            "outputPath": "dist/frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -114,16 +114,16 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Assembly-PIC-Simulator-FE:build:production"
+              "buildTarget": "frontend:build:production"
             },
             "development": {
-              "buildTarget": "Assembly-PIC-Simulator-FE:build:development"
+              "buildTarget": "frontend:build:development"
             },
             "dev": {
-              "buildTarget": "sita-frontend:build:dev"
+              "buildTarget": "ams-pic-frontend:build:dev"
             },
             "local": {
-              "buildTarget": "sita-frontend:build"
+              "buildTarget": "asm-pic-frontend:build"
             }
           },
           "defaultConfiguration": "development"
@@ -131,7 +131,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "Assembly-PIC-Simulator-FE:build"
+            "buildTarget": "frontend:build"
           }
         },
         "test": {

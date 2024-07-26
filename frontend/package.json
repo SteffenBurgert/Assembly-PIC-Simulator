@@ -1,5 +1,5 @@
 {
-  "name": "assembly-pic-simulator-fe",
+  "name": "frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
