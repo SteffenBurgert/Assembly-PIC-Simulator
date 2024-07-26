@@ -19,6 +19,22 @@ main {
   }
 }
 
+.file-upload {
+  display: flex;
+  align-items: center;
+  gap: var(--size-8);
+}
+
+// TODO: own style sheet
+::ng-deep .mat-primary {
+  --mat-full-pseudo-checkbox-selected-icon-color: var(--primary-blue) !important;
+  --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--primary-blue) !important;
+}
+
+::ng-deep .mat-mdc-mini-fab.mat-primary {
+  --mdc-fab-small-container-color: var(--primary-blue) !important;
+}
+
 .speed-input {
   height: var(--size-21);
   width: var(--size-24);

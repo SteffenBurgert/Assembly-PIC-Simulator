@@ -1,6 +1,15 @@
 <main>
   <section class="header">
-    <button mat-raised-button>File</button>
+    <div>
+      <input hidden type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
+
+      <div class="file-upload">
+        <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+          <mat-icon>upload_file</mat-icon>
+        </button>
+        <span>{{ fileName || 'No file uploaded yet.' }}</span>
+      </div>
+    </div>
     <div class="header__mid">
       <button mat-raised-button>Run</button>
       <button mat-raised-button>Stop</button>
@@ -36,12 +45,12 @@
                 <th class="th__last">Assembly Code</th>
               </thead>
               <tbody>
-                @for (item of dataSource; track $index) {
+                @for (item of fileUploadASM; track $index) {
                   <tr>
-                    <td>{{ item.debugger }}</td>
+                    <td>{{ item.isDebugg }}</td>
                     <td>{{ item.line }}</td>
                     <td>{{ item.opcode }}</td>
-                    <td>{{ item.assembly_code }}</td>
+                    <td>{{ item.assemblyCode }}</td>
                   </tr>
                 }
               </tbody>
