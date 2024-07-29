@@ -11,10 +11,22 @@
       </div>
     </div>
     <div class="header__mid">
-      <button mat-raised-button>Run</button>
-      <button mat-raised-button>Stop</button>
-      <button mat-raised-button>Step</button>
-      <button mat-raised-button>Reset</button>
+      <button mat-raised-button class="button__run-restart" (click)="toggleIsRun()">
+        @if (isRun) {
+          <span class="material-symbols-outlined button-symbol-center"> restart_alt </span>
+        } @else {
+          <span class="material-symbols-outlined button-symbol-center"> play_arrow </span>
+        }
+      </button>
+      <button mat-raised-button class="button__step">
+        <span class="material-symbols-outlined button-symbol-center"> step </span>
+      </button>
+      <button mat-raised-button class="button__step">
+        <span class="material-symbols-outlined button-symbol-center"> step_over </span>
+      </button>
+      <button mat-raised-button class="button__stop" (click)="resetIsRun()">
+        <span class="material-symbols-outlined button-symbol-center"> stop </span>
+      </button>
       <div>
         <span>Timer: 0.0 &micro;s</span>
       </div>
@@ -47,7 +59,17 @@
               <tbody>
                 @for (item of fileUploadASM; track $index) {
                   <tr>
-                    <td>{{ item.isDebugg }}</td>
+                    <td>
+                      @if (item.isDebug) {
+                        <button class="debug-button" (click)="setResetDebug($index)">
+                          <div class="circle circle__visible"></div>
+                        </button>
+                      } @else {
+                        <button class="debug-button" (click)="setResetDebug($index)">
+                          <div class="circle"></div>
+                        </button>
+                      }
+                    </td>
                     <td>{{ item.line }}</td>
                     <td>{{ item.opcode }}</td>
                     <td>{{ item.assemblyCode }}</td>
@@ -58,7 +80,7 @@
           </mat-card-content>
         </mat-card>
       </article>
-      <article class="imortant-information">
+      <article class="important-information">
         <dl class="dl-row__list">
           <dd>W-Register:</dd>
           <dt>0x0000</dt>

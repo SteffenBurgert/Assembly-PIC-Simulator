@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class FileUpload {
 
-    @JsonProperty("isDebugg")
-    private boolean isDebugg;
+    @JsonProperty("isDebug")
+    private boolean isDebug;
     @JsonProperty("line")
     private String line;
     @JsonProperty("opcode")
@@ -17,8 +17,8 @@ public class FileUpload {
     @JsonProperty("assemblyCode")
     private String assemblyCode;
 
-    public FileUpload(boolean isDebugg, String line, String opcode, String assemblyCode) {
-        this.isDebugg = isDebugg;
+    public FileUpload(boolean isDebug, String line, String opcode, String assemblyCode) {
+        this.isDebug = isDebug;
         this.line = line;
         this.opcode = opcode;
         this.assemblyCode = assemblyCode;

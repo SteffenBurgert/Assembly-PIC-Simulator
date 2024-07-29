@@ -28,6 +28,8 @@ import { FileUpload } from 'src/app/module/file-upload.module';
 })
 export class SimulatorComponent {
   isIOopen: boolean = false;
+  isRun: boolean = false;
+  // TODO: remove with correct request
   gprValues: number[] = [];
   fileName: string = '';
   fileUploadASM: FileUpload[] = [];
@@ -38,11 +40,12 @@ export class SimulatorComponent {
     this.isIOopen = !this.isIOopen;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public onFileSelected(event: any): void {
     const file: File = event.target.files[0];
 
     if (file) {
-      const formData = new FormData();
+      const formData: FormData = new FormData();
 
       formData.append('file', file);
 
@@ -59,5 +62,19 @@ export class SimulatorComponent {
           },
         });
     }
+  }
+
+  public setResetDebug(index: number): void {
+    if (this.fileUploadASM[index].opcode !== '') {
+      this.fileUploadASM[index].isDebug = !this.fileUploadASM[index].isDebug;
+    }
+  }
+
+  public toggleIsRun(): void {
+    this.isRun = !this.isRun;
+  }
+
+  public resetIsRun(): void {
+    this.isRun = false;
   }
 }

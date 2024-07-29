@@ -25,6 +25,28 @@ main {
   gap: var(--size-8);
 }
 
+.button {
+  &__run-restart,
+  &__stop,
+  &__step {
+    span {
+      color: var(--white);
+    }
+  }
+
+  &__run-restart {
+    background-color: var(--green) !important;
+  }
+
+  &__stop {
+    background-color: var(--red) !important;
+  }
+
+  &__step {
+    background-color: var(--secondary-blue) !important;
+  }
+}
+
 // TODO: own style sheet
 ::ng-deep .mat-primary {
   --mat-full-pseudo-checkbox-selected-icon-color: var(--primary-blue) !important;
@@ -75,6 +97,23 @@ main {
 
   .th__last {
     border-top-right-radius: var(--size-3);
+  }
+}
+
+.debug-button {
+  display: flex;
+  border: hidden;
+  background-color: transparent;
+}
+
+.circle {
+  display: flex;
+  width: var(--size-12);
+  height: var(--size-12);
+
+  &__visible {
+    background-color: var(--red);
+    border-radius: var(--border-radius-4);
   }
 }
 
@@ -134,7 +173,7 @@ main {
   word-break: break-word;
 }
 
-.imortant-information {
+.important-information {
   grid-column: 2;
 }
 

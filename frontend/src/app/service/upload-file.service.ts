@@ -15,7 +15,6 @@ export class UploadFileService {
   ) {}
 
   public uploadFile(formData: FormData): Observable<FileUpload[]> {
-    console.log(this.apiServerUrl);
     return this.http.post<FileUpload[]>(this.apiServerUrl + 'upload', formData, {
       headers: this.headerService.getHeader(),
     });
