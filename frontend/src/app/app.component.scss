@@ -1,4 +1,6 @@
 $sidebar-width: 4vw;
+$sidebar-open-width: 15vw;
+$sidebar-gap: 0.5vw;
 
 .mat-toolbar-single-row {
   flex-direction: column;
@@ -20,15 +22,30 @@ $sidebar-width: 4vw;
 
 .navbar-left {
   display: flex;
-  gap: 0.5vw;
+  gap: $sidebar-gap;
 
   position: absolute;
   z-index: 999;
 }
 
 .navbar-open {
-  width: 15vw;
+  width: $sidebar-open-width;
   align-items: flex-end;
+}
+
+.nav-page-link-container {
+  display: flex;
+  align-self: auto;
+}
+
+.nav-page-link-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc($sidebar-open-width - 2 * 1vw - $sidebar-gap);
+
+  color: var(--white);
+  text-decoration: none;
 }
 
 .logo_button {
