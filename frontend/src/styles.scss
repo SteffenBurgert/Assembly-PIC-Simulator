@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use 'app/style/_variables/color';
+@use 'app/style/_variables/border';
+@use 'app/style/_variables/size';
+
+html,
+body {
+  height: 100%;
+  background-color: var(--white);
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+asm-pic-root {
+  display: flex;
+  flex-direction: row;
+}

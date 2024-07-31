@@ -1,0 +1,55 @@
+:where(html) {
+  // size
+  --size-1: 1px;
+  --size-2: 2px;
+  --size-3: 3px;
+  --size-4: 4px;
+  --size-5: 5px;
+  --size-6: 6px;
+  --size-7: 7px;
+  --size-8: 8px;
+  --size-9: 9px;
+  --size-10: 10px;
+  --size-11: 12px;
+  --size-12: 14px;
+  --size-13: 16px;
+  --size-14: 18px;
+  --size-15: 20px;
+  --size-16: 24px;
+  --size-17: 26px;
+  --size-18: 28px;
+  --size-19: 30px;
+  --size-20: 32px;
+  --size-21: 40px;
+  --size-22: 48px;
+  --size-23: 56px;
+  --size-24: 100px;
+  --size-25: 120px;
+  --size-26: 128px;
+  --size-27: 200px;
+  --size-28: 260px;
+  --size-29: 270px;
+  --size-30: 300px;
+  --size-31: 450px;
+
+  // font weight
+  --font-weight-1: 100; // thin (hairline)
+  --font-weight-2: 200; // extra light (ultra light)
+  --font-weight-3: 300; // light
+  --font-weight-4: 400; // normal (regular)
+  --font-weight-5: 500; // medium
+  --font-weight-6: 600; // semi bold (demi bold)
+  --font-weight-7: 700; // bold
+  --font-weight-8: 800; // extra bold (ultra bold)
+  --font-weight-9: 900; // black (heavy)
+  --font-weight-10: 950; // extra black (ultra black)
+
+  // letter spacing
+
+  // font size
+  --font-size-1: 0.8vw;
+  --font-size-2: 1vw;
+  --font-size-3: 1.5vw;
+  --font-size-4: 2vw;
+  --font-size-5: 2.5vw;
+}

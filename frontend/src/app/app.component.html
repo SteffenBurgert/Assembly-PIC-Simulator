@@ -1,0 +1,28 @@
+<mat-toolbar class="navbar-left" [ngClass]="{ 'navbar-open': isNavbarLeftOpen }">
+  <a mat-icon-button class="logo_button" href="/">
+    <img src="../assets/image/asm_logo.png" alt="asm_logo" />
+  </a>
+  <button mat-icon-button (click)="toggleNavbar()">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="main-body">
+  <div class="router-outlet">
+    <router-outlet></router-outlet>
+  </div>
+
+  <footer>
+    <div class="footer-alignment">
+      <div class="footer-wrap">
+        <p>&copy; {{ currentYear }} |&nbsp;</p>
+        <a href="/imprint">Impressum</a>
+        <p>&nbsp;|&nbsp;</p>
+        <a href="/privacy-policy">Datenschutzerklärung</a>
+      </div>
+      <div *ngIf="gitBranchName !== undefined">
+        <p>FE-Branch: {{ gitBranchName }}</p>
+      </div>
+    </div>
+  </footer>
+</div>

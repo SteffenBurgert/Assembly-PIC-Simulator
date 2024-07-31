@@ -1,0 +1,74 @@
+$sidebar-width: 4vw;
+
+.mat-toolbar-single-row {
+  flex-direction: column;
+  height: 100vh;
+  width: $sidebar-width;
+  background-color: var(--primary-blue);
+}
+
+.main-body {
+  display: flex;
+  flex-direction: column;
+  margin-left: $sidebar-width;
+  width: 100%;
+}
+
+.mat-icon {
+  color: var(--white);
+}
+
+.navbar-left {
+  display: flex;
+  gap: 0.5vw;
+
+  position: absolute;
+  z-index: 999;
+}
+
+.navbar-open {
+  width: 15vw;
+  align-items: flex-end;
+}
+
+.logo_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 0.5vw;
+
+  img {
+    width: 3vw;
+    height: 3vw;
+  }
+}
+
+.router-outlet {
+  height: calc(95vh - 2 * 1vw);
+  margin: 1vw 1vw;
+}
+
+footer {
+  display: flex;
+  height: 5vh;
+  background-color: var(--secondary-blue);
+}
+
+.footer-alignment {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 12px 10px 0;
+  color: var(--white);
+
+  a {
+    color: var(--white);
+  }
+}
+
+.footer-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+}
