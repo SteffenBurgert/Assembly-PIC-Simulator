@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BitOrientedFileRegisterCalculationTest {
+class BitOrientedAssemblyFileRegisterCalculationTestModel {
 
     private final BitOrientedFileRegisterCalculation bitOrientedFileRegisterCalculation = new BitOrientedFileRegisterCalculation();
     private Ram ram;
@@ -23,58 +23,58 @@ class BitOrientedFileRegisterCalculationTest {
 
     @Test
     void bcf() {
-        ram.setGeneralPurposeRegisterBank1(28, 43);
+        ram.setGeneralPurposeRegisterBank0(28, 43);
         bitOrientedFileRegisterCalculation.bcf(412, ram, programTimer);
-        assertThat(ram.getGeneralPurposeRegisterBank1(28)).isEqualTo(35);
+        assertThat(ram.getGeneralPurposeRegisterBank0(28)).isEqualTo(35);
 
-        ram.setGeneralPurposeRegisterBank1(30, 27);
+        ram.setGeneralPurposeRegisterBank0(30, 27);
         bitOrientedFileRegisterCalculation.bcf(414, ram, programTimer);
-        assertThat(ram.getGeneralPurposeRegisterBank1(30)).isEqualTo(19);
+        assertThat(ram.getGeneralPurposeRegisterBank0(30)).isEqualTo(19);
 
-        ram.setGeneralPurposeRegisterBank1(28, 129);
+        ram.setGeneralPurposeRegisterBank0(28, 129);
         bitOrientedFileRegisterCalculation.bcf(924, ram, programTimer);
-        assertThat(ram.getGeneralPurposeRegisterBank1(28)).isEqualTo(1);
+        assertThat(ram.getGeneralPurposeRegisterBank0(28)).isEqualTo(1);
     }
 
     @Test
     void bsf() {
-        ram.setGeneralPurposeRegisterBank1(30, 27);
+        ram.setGeneralPurposeRegisterBank0(30, 27);
         bitOrientedFileRegisterCalculation.bsf(414, ram, programTimer);
-        assertThat(ram.getGeneralPurposeRegisterBank1(30)).isEqualTo(27);
+        assertThat(ram.getGeneralPurposeRegisterBank0(30)).isEqualTo(27);
 
-        ram.setGeneralPurposeRegisterBank1(28, 30);
+        ram.setGeneralPurposeRegisterBank0(28, 30);
         bitOrientedFileRegisterCalculation.bsf(412, ram, programTimer);
-        assertThat(ram.getGeneralPurposeRegisterBank1(28)).isEqualTo(30);
+        assertThat(ram.getGeneralPurposeRegisterBank0(28)).isEqualTo(30);
 
-        ram.setGeneralPurposeRegisterBank1(28, 16);
+        ram.setGeneralPurposeRegisterBank0(28, 16);
         bitOrientedFileRegisterCalculation.bsf(412, ram, programTimer);
-        assertThat(ram.getGeneralPurposeRegisterBank1(28)).isEqualTo(24);
+        assertThat(ram.getGeneralPurposeRegisterBank0(28)).isEqualTo(24);
 
-        ram.setGeneralPurposeRegisterBank1(28, 30);
+        ram.setGeneralPurposeRegisterBank0(28, 30);
         bitOrientedFileRegisterCalculation.bsf(924, ram, programTimer);
-        assertThat(ram.getGeneralPurposeRegisterBank1(28)).isEqualTo(158);
+        assertThat(ram.getGeneralPurposeRegisterBank0(28)).isEqualTo(158);
 
-        ram.setGeneralPurposeRegisterBank1(0x10, 0x08);
+        ram.setGeneralPurposeRegisterBank0(0x10, 0x08);
         bitOrientedFileRegisterCalculation.bsf(912, ram, programTimer);
-        assertThat(ram.getGeneralPurposeRegisterBank1(0x10)).isEqualTo(0x88);
+        assertThat(ram.getGeneralPurposeRegisterBank0(0x10)).isEqualTo(0x88);
     }
 
     @Test
     void btfsc() {
         assertThat(ram.getProgramCounter()).isEqualTo(0);
-        ram.setGeneralPurposeRegisterBank1(20, 10);
+        ram.setGeneralPurposeRegisterBank0(20, 10);
         bitOrientedFileRegisterCalculation.btfsc(20, ram, programTimer);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
 
-        ram.setGeneralPurposeRegisterBank1(20, 11);
+        ram.setGeneralPurposeRegisterBank0(20, 11);
         bitOrientedFileRegisterCalculation.btfsc(20, ram, programTimer);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
 
-        ram.setGeneralPurposeRegisterBank1(20, 30);
+        ram.setGeneralPurposeRegisterBank0(20, 30);
         bitOrientedFileRegisterCalculation.btfsc(404, ram, programTimer);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
 
-        ram.setGeneralPurposeRegisterBank1(20, 21);
+        ram.setGeneralPurposeRegisterBank0(20, 21);
         bitOrientedFileRegisterCalculation.btfsc(404, ram, programTimer);
         assertThat(ram.getProgramCounter()).isEqualTo(2);
     }
@@ -82,19 +82,19 @@ class BitOrientedFileRegisterCalculationTest {
     @Test
     void btfss() {
         assertThat(ram.getProgramCounter()).isEqualTo(0);
-        ram.setGeneralPurposeRegisterBank1(20, 11);
+        ram.setGeneralPurposeRegisterBank0(20, 11);
         bitOrientedFileRegisterCalculation.btfss(20, ram, programTimer);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
 
-        ram.setGeneralPurposeRegisterBank1(20, 10);
+        ram.setGeneralPurposeRegisterBank0(20, 10);
         bitOrientedFileRegisterCalculation.btfss(20, ram, programTimer);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
 
-        ram.setGeneralPurposeRegisterBank1(20, 22);
+        ram.setGeneralPurposeRegisterBank0(20, 22);
         bitOrientedFileRegisterCalculation.btfss(404, ram, programTimer);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
 
-        ram.setGeneralPurposeRegisterBank1(20, 26);
+        ram.setGeneralPurposeRegisterBank0(20, 26);
         bitOrientedFileRegisterCalculation.btfss(404, ram, programTimer);
         assertThat(ram.getProgramCounter()).isEqualTo(2);
     }

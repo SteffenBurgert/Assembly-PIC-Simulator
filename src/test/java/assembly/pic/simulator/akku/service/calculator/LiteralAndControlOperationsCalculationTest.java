@@ -1,6 +1,6 @@
 package assembly.pic.simulator.akku.service.calculator;
 
-import assembly.pic.simulator.akku.AssemblyFile;
+import assembly.pic.simulator.akku.assembly_file.lst.AssemblyLstFile;
 import assembly.pic.simulator.akku.Ram;
 import assembly.pic.simulator.akku.ram_enums.Intcon;
 import assembly.pic.simulator.akku.ram_enums.Status;
@@ -9,8 +9,6 @@ import assembly.pic.simulator.akku.timer.WatchDogTimer;
 import assembly.pic.simulator.service.calculator.LiteralAndControlOperationsCalculation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -150,7 +148,7 @@ class LiteralAndControlOperationsCalculationTest {
     @Test
     void gotoAssy() {
         ram.setProgramCounter(20);
-        AssemblyFile assemblyFile = new AssemblyFile();
+        AssemblyLstFile assemblyLstFile = new AssemblyLstFile();
         //assemblyFile.setFile(List.of("some", "random", "value", "goto ende"));
 
         // first 11 Bit of 5526 equals 1430 in decimal

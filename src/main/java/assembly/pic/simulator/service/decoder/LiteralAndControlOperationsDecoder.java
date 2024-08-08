@@ -1,7 +1,10 @@
 package assembly.pic.simulator.service.decoder;
 
+import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
+@Service
 public class LiteralAndControlOperationsDecoder {
 
     public Optional<CommandCode> decode(int opcode) {

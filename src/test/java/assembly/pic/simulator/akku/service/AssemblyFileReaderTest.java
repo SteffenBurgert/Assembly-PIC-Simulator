@@ -1,19 +1,13 @@
 package assembly.pic.simulator.akku.service;
 
-import assembly.pic.simulator.akku.AssemblyFile;
-import assembly.pic.simulator.service.AssemblyFileReader;
-import org.junit.jupiter.api.Test;
+import assembly.pic.simulator.service.assembly_file_reader.AssemblyLstFileReader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-
 class AssemblyFileReaderTest {
 
-    private static final AssemblyFileReader assemblyFileReader = new AssemblyFileReader();
+    private static final AssemblyLstFileReader ASSEMBLY_LST_FILE_READER = new AssemblyLstFileReader();
 
     /*@Test
     void testReadFile_readFile() {

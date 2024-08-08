@@ -6,7 +6,7 @@ import assembly.pic.simulator.service.Decoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BitOrientedFileRegisterCommandCodeDecoderTest {
+public class BitOrientedAssemblyFileRegisterCommandCodeDecoderTestModel {
 
     private final Decoder decoder = new Decoder();
 

@@ -2,6 +2,7 @@ package assembly.pic.simulator.akku;
 
 import assembly.pic.simulator.akku.timer.WatchDogTimer;
 import assembly.pic.simulator.akku.ram_enums.*;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,10 +11,14 @@ import java.util.List;
 public class Ram {
 
     private int wRegister;
+    @Getter
     private int programCounter = 0;
+    @Getter
     private final static int bankSize = 128;
     private final static int specialPurposeRegisterSize = 12;
+    @Getter
     private final List<Integer> bank0 = new ArrayList<>(bankSize);
+    @Getter
     private final List<Integer> bank1 = new ArrayList<>(bankSize);
     private List<Integer> tos = new ArrayList<>();
     private int tosPointer = -1;
@@ -64,7 +69,7 @@ public class Ram {
         setINTCON(Intcon.EEIE, 0);
         setINTCON(Intcon.GIE, 0);
 
-        //Bank2
+        //Bank1
         setOptionReg(255);
         setTrisA(31);
         setTrisB(255);
@@ -85,9 +90,9 @@ public class Ram {
 
     public int getGeneralPurposeRegister(int position) {
         if (getStatus(Status.RP0) == 1) {
-            return getGeneralPurposeRegisterBank2(position);
+            return getGeneralPurposeRegisterBank1(position);
         }
-        return getGeneralPurposeRegisterBank1(position);
+        return getGeneralPurposeRegisterBank0(position);
     }
 
     public void setGeneralPurposeRegister(int position, int value) {
@@ -144,26 +149,26 @@ public class Ram {
         } else {
             if (getStatus(Status.RP0) == 1) {
                 if (position >= bankSize) position -= bankSize;
-                setGeneralPurposeRegisterBank2(position, value);
-            } else {
                 setGeneralPurposeRegisterBank1(position, value);
+            } else {
+                setGeneralPurposeRegisterBank0(position, value);
             }
         }
     }
 
-    public int getGeneralPurposeRegisterBank1(int position) {
+    public int getGeneralPurposeRegisterBank0(int position) {
         return bank0.get(position);
     }
 
-    public void setGeneralPurposeRegisterBank1(int position, int value) {
+    public void setGeneralPurposeRegisterBank0(int position, int value) {
         bank0.set(position, value);
     }
 
-    public int getGeneralPurposeRegisterBank2(int position) {
+    public int getGeneralPurposeRegisterBank1(int position) {
         return bank1.get(position);
     }
 
-    public void setGeneralPurposeRegisterBank2(int position, int value) {
+    public void setGeneralPurposeRegisterBank1(int position, int value) {
         bank1.set(position, value);
     }
 
@@ -173,10 +178,6 @@ public class Ram {
 
     public void setWRegister(int wRegister) {
         this.wRegister = wRegister;
-    }
-
-    public int getProgramCounter() {
-        return programCounter;
     }
 
     public void setProgramCounter(int programCounter) {
@@ -227,7 +228,7 @@ public class Ram {
     }
 
     /**
-     * Register in Bank1 and Bank2 -------------------------------------------------------------------------------------
+     * Register in Bank0 and Bank1 -------------------------------------------------------------------------------------
      */
 
     public int getINDF() {
@@ -303,7 +304,7 @@ public class Ram {
     }
 
     /**
-     * Register in Bank1 -----------------------------------------------------------------------------------------------
+     * Register in Bank0 -----------------------------------------------------------------------------------------------
      */
 
     public int getTRM0() {
@@ -461,7 +462,7 @@ public class Ram {
     }
 
     /**
-     * Register in Bank2 -----------------------------------------------------------------------------------------------
+     * Register in Bank1 -----------------------------------------------------------------------------------------------
      */
 
     public int getOptionReg() {

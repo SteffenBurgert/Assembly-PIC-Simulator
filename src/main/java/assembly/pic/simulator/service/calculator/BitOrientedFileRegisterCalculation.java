@@ -3,7 +3,9 @@ package assembly.pic.simulator.service.calculator;
 import assembly.pic.simulator.akku.Ram;
 import assembly.pic.simulator.akku.timer.ProgramTimer;
 import assembly.pic.simulator.service.calculator.port.BitOrientedFileRegisterCalculationPort;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BitOrientedFileRegisterCalculation implements BitOrientedFileRegisterCalculationPort {
 
     @Override

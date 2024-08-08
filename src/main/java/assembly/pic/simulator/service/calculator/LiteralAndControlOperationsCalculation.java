@@ -7,7 +7,9 @@ import assembly.pic.simulator.akku.ram_enums.Intcon;
 import assembly.pic.simulator.akku.ram_enums.Status;
 import assembly.pic.simulator.service.calculator.general.GeneralCalculation;
 import assembly.pic.simulator.service.calculator.port.LiteralAndControlOperationsPort;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LiteralAndControlOperationsCalculation implements LiteralAndControlOperationsPort {
 
     private static final GeneralCalculation generalCalculation = new GeneralCalculation();

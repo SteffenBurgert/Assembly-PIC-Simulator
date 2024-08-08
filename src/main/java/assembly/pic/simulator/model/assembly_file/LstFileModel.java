@@ -1,12 +1,14 @@
-package assembly.pic.simulator.model;
+package assembly.pic.simulator.model.assembly_file;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class FileUpload {
+public class LstFileModel {
 
     @JsonProperty("isDebug")
     private boolean isDebug;
@@ -16,11 +18,4 @@ public class FileUpload {
     private String opcode;
     @JsonProperty("assemblyCode")
     private String assemblyCode;
-
-    public FileUpload(boolean isDebug, String line, String opcode, String assemblyCode) {
-        this.isDebug = isDebug;
-        this.line = line;
-        this.opcode = opcode;
-        this.assemblyCode = assemblyCode;
-    }
 }

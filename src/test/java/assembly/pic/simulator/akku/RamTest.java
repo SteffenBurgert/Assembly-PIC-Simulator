@@ -1,6 +1,5 @@
 package assembly.pic.simulator.akku;
 
-import assembly.pic.simulator.akku.Ram;
 import assembly.pic.simulator.akku.ram_enums.SpecialPurpose;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,19 +21,19 @@ class RamTest {
 
     @AfterEach
     public void cleanup() {
+        assertThat(ram.getGeneralPurposeRegisterBank0(maxBankSize - 1)).isEqualTo(0);
+        assertThatThrownBy(() -> ram.getGeneralPurposeRegisterBank0(maxBankSize)).isInstanceOf(IndexOutOfBoundsException.class);
+
         assertThat(ram.getGeneralPurposeRegisterBank1(maxBankSize - 1)).isEqualTo(0);
         assertThatThrownBy(() -> ram.getGeneralPurposeRegisterBank1(maxBankSize)).isInstanceOf(IndexOutOfBoundsException.class);
-
-        assertThat(ram.getGeneralPurposeRegisterBank2(maxBankSize - 1)).isEqualTo(0);
-        assertThatThrownBy(() -> ram.getGeneralPurposeRegisterBank2(maxBankSize)).isInstanceOf(IndexOutOfBoundsException.class);
     }
 
     @Test
     public void testRamSetup() {
         // STATUS
         assertThat(ram.getStatus()).isEqualTo(24);
+        assertThat(ram.getGeneralPurposeRegisterBank0(SpecialPurpose.STATUS.location)).isEqualTo(24);
         assertThat(ram.getGeneralPurposeRegisterBank1(SpecialPurpose.STATUS.location)).isEqualTo(24);
-        assertThat(ram.getGeneralPurposeRegisterBank2(SpecialPurpose.STATUS.location)).isEqualTo(24);
         // OPTION_REG
         assertThat(ram.getOptionReg()).isEqualTo(255);
         // TRIS_A
@@ -45,16 +44,16 @@ class RamTest {
 
     @Test
     public void testGeneralPurposeRegisterBank1() {
-        assertThat(ram.getGeneralPurposeRegisterBank1(20)).isEqualTo(0);
-        ram.setGeneralPurposeRegisterBank1(20, 31);
-        assertThat(ram.getGeneralPurposeRegisterBank1(20)).isEqualTo(31);
+        assertThat(ram.getGeneralPurposeRegisterBank0(20)).isEqualTo(0);
+        ram.setGeneralPurposeRegisterBank0(20, 31);
+        assertThat(ram.getGeneralPurposeRegisterBank0(20)).isEqualTo(31);
     }
 
     @Test
     public void testGeneralPurposeRegisterBank2() {
-        assertThat(ram.getGeneralPurposeRegisterBank2(30)).isEqualTo(0);
-        ram.setGeneralPurposeRegisterBank2(30, 50);
-        assertThat(ram.getGeneralPurposeRegisterBank2(30)).isEqualTo(50);
+        assertThat(ram.getGeneralPurposeRegisterBank1(30)).isEqualTo(0);
+        ram.setGeneralPurposeRegisterBank1(30, 50);
+        assertThat(ram.getGeneralPurposeRegisterBank1(30)).isEqualTo(50);
     }
 
     @Test
@@ -92,7 +91,7 @@ class RamTest {
         assertThat(ram.getPCL()).isEqualTo(1);
         assertThat(ram.getPCLATH()).isEqualTo(0);
 
-        ram.setGeneralPurposeRegisterBank1(10, 31);
+        ram.setGeneralPurposeRegisterBank0(10, 31);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
         assertThat(ram.getPCL()).isEqualTo(1);
         assertThat(ram.getPCLATH()).isEqualTo(31);
@@ -170,7 +169,7 @@ class RamTest {
     @Test
     public void testPCLATH() {
         assertThat(ram.getPCLATH()).isEqualTo(0);
-        ram.setGeneralPurposeRegisterBank1(10, 50);
+        ram.setGeneralPurposeRegisterBank0(10, 50);
         assertThat(ram.getPCLATH()).isEqualTo(50);
     }
 

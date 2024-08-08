@@ -6,7 +6,9 @@ import assembly.pic.simulator.akku.timer.WatchDogTimer;
 import assembly.pic.simulator.service.calculator.BitOrientedFileRegisterCalculation;
 import assembly.pic.simulator.service.calculator.ByteOrientedFileRegisterCalculation;
 import assembly.pic.simulator.service.calculator.LiteralAndControlOperationsCalculation;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Calculator {
 
     private static final Decoder decoder = new Decoder();

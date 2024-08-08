@@ -5,7 +5,9 @@ import assembly.pic.simulator.akku.ram_enums.Status;
 import assembly.pic.simulator.akku.timer.ProgramTimer;
 import assembly.pic.simulator.service.calculator.general.GeneralCalculation;
 import assembly.pic.simulator.service.calculator.port.ByteOrientedFileRegisterCalculationPort;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ByteOrientedFileRegisterCalculation implements
         ByteOrientedFileRegisterCalculationPort {
 

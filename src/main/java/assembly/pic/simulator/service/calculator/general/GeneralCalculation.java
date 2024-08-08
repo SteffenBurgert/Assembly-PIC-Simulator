@@ -2,7 +2,9 @@ package assembly.pic.simulator.service.calculator.general;
 
 import assembly.pic.simulator.akku.Ram;
 import assembly.pic.simulator.akku.ram_enums.Status;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GeneralCalculation {
 
     public void setDCarry(Ram ram, int firstNumber, int secondNumber, DCOperation operation) {

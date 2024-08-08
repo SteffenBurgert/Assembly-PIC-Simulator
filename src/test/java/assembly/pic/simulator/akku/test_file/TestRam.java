@@ -23,8 +23,8 @@ public class TestRam {
         carryBit = ram.getStatus(Status.CARRY_BIT);
         dCarryBit = ram.getStatus(Status.DCARRY_BIT);
         zeroBit = ram.getStatus(Status.ZERO_BIT);
-        value1 = ram.getGeneralPurposeRegisterBank1(12);
-        value2 = ram.getGeneralPurposeRegisterBank1(13);
+        value1 = ram.getGeneralPurposeRegisterBank0(12);
+        value2 = ram.getGeneralPurposeRegisterBank0(13);
 
         pc = ram.getProgramCounter();
         pcl = ram.getPCL();

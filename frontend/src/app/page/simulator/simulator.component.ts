@@ -8,7 +8,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { UploadFileService } from 'src/app/service/upload-file.service';
-import { FileUpload } from 'src/app/module/file-upload.module';
+import { AssemblyFile } from 'src/app/module/assembly-file.module';
+import { takeUntil } from 'rxjs';
+import { Unsub } from 'src/app/utils/unsub.class';
 
 @Component({
   selector: 'asm-pic-simulator',
@@ -26,15 +28,14 @@ import { FileUpload } from 'src/app/module/file-upload.module';
   templateUrl: './simulator.component.html',
   styleUrl: './simulator.component.scss',
 })
-export class SimulatorComponent {
+export class SimulatorComponent extends Unsub {
   isIOopen: boolean = false;
   isRun: boolean = false;
-  // TODO: remove with correct request
-  gprValues: number[] = [];
-  fileName: string = '';
-  fileUploadASM: FileUpload[] = [];
+  asmFile: AssemblyFile = new AssemblyFile();
 
-  constructor(private uploadFileService: UploadFileService) {}
+  constructor(private uploadFileService: UploadFileService) {
+    super();
+  }
 
   public toggleIsIOopen(): void {
     this.isIOopen = !this.isIOopen;
@@ -51,11 +52,11 @@ export class SimulatorComponent {
 
       this.uploadFileService
         .uploadFile(formData)
-        .pipe()
+        .pipe(takeUntil(this.unsubscribe$))
         .subscribe({
-          next: (fileUpload: FileUpload[]) => {
-            this.fileUploadASM = fileUpload;
-            this.fileName = file.name;
+          next: (assemblyFile: AssemblyFile) => {
+            this.asmFile = assemblyFile;
+            console.log(this.asmFile);
           },
           error: () => {
             console.log('Error');
@@ -65,8 +66,8 @@ export class SimulatorComponent {
   }
 
   public setResetDebug(index: number): void {
-    if (this.fileUploadASM[index].opcode !== '') {
-      this.fileUploadASM[index].isDebug = !this.fileUploadASM[index].isDebug;
+    if (this.asmFile.lstFile !== undefined && this.asmFile.lstFile[index].opcode !== '') {
+      this.asmFile.lstFile[index].isDebug = !this.asmFile.lstFile[index].isDebug;
     }
   }
 

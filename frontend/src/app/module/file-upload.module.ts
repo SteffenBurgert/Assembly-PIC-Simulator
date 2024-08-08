@@ -1,4 +1,4 @@
-export class FileUpload {
+export class LstFile {
   constructor(
     public isDebug: boolean = false,
     public line: string = '',

@@ -6,7 +6,9 @@ import assembly.pic.simulator.service.decoder.BitOrientedFileRegisterOperationsD
 import assembly.pic.simulator.service.decoder.ByteOrientedFileRegisterOperationsDecoder;
 import assembly.pic.simulator.service.decoder.LiteralAndControlOperationsDecoder;
 import assembly.pic.simulator.service.decoder.CommandCode;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Decoder {
 
     private static final ByteOrientedFileRegisterOperationsDecoder byteOrientedDecoder =
