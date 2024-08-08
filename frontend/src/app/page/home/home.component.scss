@@ -6,3 +6,18 @@
     text-decoration: none;
   }
 }
+
+.card-group {
+  display: block;
+}
+
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.card-content {
+  text-align: justify;
+  hyphens: auto;
+}

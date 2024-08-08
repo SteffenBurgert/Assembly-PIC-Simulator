@@ -5,6 +5,24 @@
   <button mat-icon-button (click)="toggleNavbar()">
     <mat-icon>menu</mat-icon>
   </button>
+  <div class="nav-page-link-container">
+    @if (isNavbarLeftOpen) {
+      <a class="nav-page-link-content" href="/simulator">
+        <div><span>Simulator</span></div>
+        <div>
+          <button mat-icon-button>
+            <mat-icon>smart_toy</mat-icon>
+          </button>
+        </div>
+      </a>
+    } @else {
+      <button mat-icon-button>
+        <a href="/simulator">
+          <mat-icon>smart_toy</mat-icon>
+        </a>
+      </button>
+    }
+  </div>
 </mat-toolbar>
 
 <div class="main-body">
@@ -16,9 +34,9 @@
     <div class="footer-alignment">
       <div class="footer-wrap">
         <p>&copy; {{ currentYear }} |&nbsp;</p>
-        <a href="/imprint">Impressum</a>
+        <a href="/imprint">Imprint</a>
         <p>&nbsp;|&nbsp;</p>
-        <a href="/privacy-policy">Datenschutzerklärung</a>
+        <a href="/privacy-policy">Privacy-Policy</a>
       </div>
       <div *ngIf="gitBranchName !== undefined">
         <p>FE-Branch: {{ gitBranchName }}</p>
