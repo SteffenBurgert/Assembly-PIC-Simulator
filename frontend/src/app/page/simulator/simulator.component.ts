@@ -11,6 +11,7 @@ import { UploadFileService } from 'src/app/service/upload-file.service';
 import { AssemblyFile } from 'src/app/module/assembly-file.module';
 import { takeUntil } from 'rxjs';
 import { Unsub } from 'src/app/utils/unsub.class';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'asm-pic-simulator',
@@ -56,10 +57,9 @@ export class SimulatorComponent extends Unsub {
         .subscribe({
           next: (assemblyFile: AssemblyFile) => {
             this.asmFile = assemblyFile;
-            console.log(this.asmFile);
           },
-          error: () => {
-            console.log('Error');
+          error: (error: HttpErrorResponse) => {
+            alert(error);
           },
         });
     }

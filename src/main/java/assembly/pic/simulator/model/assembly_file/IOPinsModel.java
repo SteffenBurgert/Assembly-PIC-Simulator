@@ -7,6 +7,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class IOPinsModel {
+
     @JsonProperty("portA")
     private List<Integer> portA;
     @JsonProperty("portB")

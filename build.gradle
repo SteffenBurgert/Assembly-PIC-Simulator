@@ -24,6 +24,7 @@ dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 	testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.25.3'
+	testImplementation 'org.springframework:spring-test:5.3.24'
 }
 
 tasks.named('test') {

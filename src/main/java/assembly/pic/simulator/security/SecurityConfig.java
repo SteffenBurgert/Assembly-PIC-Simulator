@@ -19,30 +19,30 @@ import java.util.List;
 @Order(1)
 public class SecurityConfig {
 
-  @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        .csrf(AbstractHttpConfigurer::disable)
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(requests -> requests
-            .requestMatchers("/api/**").authenticated())
-            .authorizeHttpRequests(
-                    request -> request.requestMatchers("/**")
-                            .permitAll());
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/api/**").authenticated())
+                .authorizeHttpRequests(
+                        request -> request.requestMatchers("/**")
+                                .permitAll());
 
-    return http.build();
-  }
+        return http.build();
+    }
 
-  // To enable CORS
-  @Bean
-  protected CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("*"));
-    configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
-  }
+    // To enable CORS
+    @Bean
+    protected CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
 }

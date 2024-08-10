@@ -20,11 +20,11 @@ class RamTest {
     }
 
     @AfterEach
-    public void cleanup() {
-        assertThat(ram.getGeneralPurposeRegisterBank0(maxBankSize - 1)).isEqualTo(0);
+    public void afterEachBankSizeCheck() {
+        assertThat(ram.getBank0().size()).isEqualTo(maxBankSize);
         assertThatThrownBy(() -> ram.getGeneralPurposeRegisterBank0(maxBankSize)).isInstanceOf(IndexOutOfBoundsException.class);
 
-        assertThat(ram.getGeneralPurposeRegisterBank1(maxBankSize - 1)).isEqualTo(0);
+        assertThat(ram.getBank1().size()).isEqualTo(maxBankSize);
         assertThatThrownBy(() -> ram.getGeneralPurposeRegisterBank1(maxBankSize)).isInstanceOf(IndexOutOfBoundsException.class);
     }
 
