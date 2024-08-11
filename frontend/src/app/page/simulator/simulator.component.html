@@ -1,10 +1,10 @@
 <main>
   <section class="header">
     <div>
-      <input hidden type="file" class="file-input" (change)="onFileSelected($event)" #lstFileModel />
+      <input hidden type="file" class="file-input" (change)="onFileSelected($event)" #lstLineModel />
 
       <div class="file-upload">
-        <button mat-mini-fab color="primary" class="upload-btn" (click)="lstFileModel.click()">
+        <button mat-mini-fab color="primary" class="upload-btn" (click)="lstLineModel.click()">
           <mat-icon>upload_file</mat-icon>
         </button>
         <span>{{ asmFile.fileName || 'No file uploaded yet.' }}</span>

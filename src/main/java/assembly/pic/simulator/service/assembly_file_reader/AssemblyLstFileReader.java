@@ -2,7 +2,7 @@ package assembly.pic.simulator.service.assembly_file_reader;
 
 import assembly.pic.simulator.akku.assembly_file.lst.AssemblyLstFile;
 import assembly.pic.simulator.akku.assembly_file.lst.LstOpcodeAndLine;
-import assembly.pic.simulator.model.assembly_file.LstFileModel;
+import assembly.pic.simulator.model.assembly_file.LstLineModel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,37 +14,39 @@ import java.util.logging.Logger;
 @Service
 public class AssemblyLstFileReader {
 
-    private static final Logger LOGGER = Logger.getLogger(AssemblyLstFileReader.class.getName());
+    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     public AssemblyLstFile readFile(MultipartFile file) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream(), Charset.forName("ISO-8859-15")))) {
+            LOGGER.info("Started reading " + file.getOriginalFilename() + " file.");
             String line = bufferedReader.readLine();
-            List<LstFileModel> readFile = new ArrayList<>();
+            List<LstLineModel> lstLines = new ArrayList<>();
             Map<Integer, LstOpcodeAndLine> assemblerArguments = new HashMap<>();
             int lineCounter = 0;
 
             while (line != null) {
                 String[] splitLine = line.split(" ");
-                readFile.add(mapLstFile(splitLine));
+                lstLines.add(mapLstFile(splitLine));
                 mapOperations(splitLine, assemblerArguments, lineCounter++);
                 line = bufferedReader.readLine();
             }
 
-            return new AssemblyLstFile(readFile, assemblerArguments);
+            LOGGER.info("Finished reading " + file.getOriginalFilename() + " file.");
+            return new AssemblyLstFile(lstLines, assemblerArguments);
         } catch (IOException e) {
-            LOGGER.warning("Problem with reading File: " + file.getName() + " error message: " + e.getMessage());
+            LOGGER.warning("Problem with reading File: " + file.getOriginalFilename() + " error message: " + e.getMessage());
             throw e;
         }
     }
 
-    private LstFileModel mapLstFile(String[] line) {
+    private LstLineModel mapLstFile(String[] line) {
         if (line.length > 2 && line[0].length() == 4 && line[1].length() == 4) {
-            return new LstFileModel(false, line[0], line[1], joinAssemblyCodeString(line));
+            return new LstLineModel(false, line[0], line[1], joinAssemblyCodeString(line));
         }
-        return new LstFileModel(false, "", "", String.join(" ", line));
+        return new LstLineModel(false, "", "", String.join(" ", line));
     }
 
-    private static String joinAssemblyCodeString(String[] array) {
+    private String joinAssemblyCodeString(String[] array) {
         return String.join(" ", Arrays.asList(array).subList(2, array.length));
     }
 

@@ -19,12 +19,12 @@ public class AssemblyFileModel {
     @JsonProperty("ioPins")
     private IOPinsModel ioPinsModel;
     @JsonProperty("lstFile")
-    private List<LstFileModel> lstFileModel;
+    private List<LstLineModel> lstLineModel;
 
-    public AssemblyFileModel(FileType fileType, RamModel ram, IOPinsModel ioPinsModel, List<LstFileModel> lstFileModel) {
+    public AssemblyFileModel(FileType fileType, RamModel ram, IOPinsModel ioPinsModel, List<LstLineModel> lstLineModel) {
         this.fileType = fileType;
         this.ioPinsModel = ioPinsModel;
         this.ram = ram;
-        this.lstFileModel = lstFileModel;
+        this.lstLineModel = lstLineModel;
     }
 }

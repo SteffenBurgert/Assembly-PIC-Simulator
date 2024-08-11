@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class LstFileModel {
+public class LstLineModel {
 
     @JsonProperty("isDebug")
     private boolean isDebug;

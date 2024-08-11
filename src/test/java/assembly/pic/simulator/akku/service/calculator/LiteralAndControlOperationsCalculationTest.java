@@ -1,18 +1,13 @@
 package assembly.pic.simulator.akku.service.calculator;
 
-import assembly.pic.simulator.akku.assembly_file.lst.AssemblyLstFile;
 import assembly.pic.simulator.akku.Ram;
 import assembly.pic.simulator.akku.ram_enums.Intcon;
 import assembly.pic.simulator.akku.ram_enums.Status;
 import assembly.pic.simulator.akku.timer.ProgramTimer;
 import assembly.pic.simulator.akku.timer.WatchDogTimer;
-import assembly.pic.simulator.model.assembly_file.LstFileModel;
 import assembly.pic.simulator.service.calculator.LiteralAndControlOperationsCalculation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
