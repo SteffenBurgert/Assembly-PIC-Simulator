@@ -1,11 +1,32 @@
 <main>
   <section class="header">
-    <button mat-raised-button>File</button>
+    <div>
+      <input hidden type="file" class="file-input" (change)="onFileSelected($event)" #lstLineModel />
+
+      <div class="file-upload">
+        <button mat-mini-fab color="primary" class="upload-btn" (click)="lstLineModel.click()">
+          <mat-icon>upload_file</mat-icon>
+        </button>
+        <span>{{ asmFile.fileName || 'No file uploaded yet.' }}</span>
+      </div>
+    </div>
     <div class="header__mid">
-      <button mat-raised-button>Run</button>
-      <button mat-raised-button>Stop</button>
-      <button mat-raised-button>Step</button>
-      <button mat-raised-button>Reset</button>
+      <button mat-raised-button class="button__run-restart" (click)="toggleIsRun()">
+        @if (isRun) {
+          <span class="material-symbols-outlined button-symbol-center"> restart_alt </span>
+        } @else {
+          <span class="material-symbols-outlined button-symbol-center"> play_arrow </span>
+        }
+      </button>
+      <button mat-raised-button class="button__step">
+        <span class="material-symbols-outlined button-symbol-center"> step </span>
+      </button>
+      <button mat-raised-button class="button__step">
+        <span class="material-symbols-outlined button-symbol-center"> step_over </span>
+      </button>
+      <button mat-raised-button class="button__stop" (click)="resetIsRun()">
+        <span class="material-symbols-outlined button-symbol-center"> stop </span>
+      </button>
       <div>
         <span>Timer: 0.0 &micro;s</span>
       </div>
@@ -28,55 +49,67 @@
       >
         <mat-card appearance="outlined" class="code-table__mat-card-content">
           <mat-card-content>
-            <table class="simulator-table">
-              <thead>
-                <th class="th__first"><span class="material-symbols-outlined">bug_report</span></th>
-                <th>Line</th>
-                <th>Opcode</th>
-                <th class="th__last">Assembly Code</th>
-              </thead>
-              <tbody>
-                @for (item of dataSource; track $index) {
-                  <tr>
-                    <td>{{ item.debugger }}</td>
-                    <td>{{ item.line }}</td>
-                    <td>{{ item.opcode }}</td>
-                    <td>{{ item.assembly_code }}</td>
-                  </tr>
-                }
-              </tbody>
-            </table>
+            @if (asmFile.fileType === 'LST') {
+              <table class="simulator-table">
+                <thead>
+                  <th class="th__first"><span class="material-symbols-outlined">bug_report</span></th>
+                  <th>Line</th>
+                  <th>Opcode</th>
+                  <th class="th__last">Assembly Code</th>
+                </thead>
+                <tbody>
+                  @for (item of asmFile.lstFile; track $index) {
+                    <tr>
+                      <td>
+                        @if (item.isDebug) {
+                          <button class="debug-button" (click)="setResetDebug($index)">
+                            <div class="circle circle__visible"></div>
+                          </button>
+                        } @else {
+                          <button class="debug-button" (click)="setResetDebug($index)">
+                            <div class="circle"></div>
+                          </button>
+                        }
+                      </td>
+                      <td>{{ item.line }}</td>
+                      <td>{{ item.opcode }}</td>
+                      <td>{{ item.assemblyCode }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
           </mat-card-content>
         </mat-card>
       </article>
-      <article class="imortant-information">
+      <article class="important-information">
         <dl class="dl-row__list">
           <dd>W-Register:</dd>
-          <dt>0x0000</dt>
+          <dt>0x{{ asmFile.ram.wRegister.toString(16).padStart(4, '0') }}</dt>
         </dl>
         <dl class="dl-row__list">
           <dd>PC:</dd>
-          <dt>0x0000</dt>
+          <dt>0x{{ asmFile.ram.pc.toString(16).padStart(4, '0') }}</dt>
         </dl>
         <dl class="dl-row__list">
           <dd>PCL:</dd>
-          <dt>0x0000</dt>
+          <dt>0x{{ asmFile.ram.pcl.toString(16).padStart(4, '0') }}</dt>
         </dl>
         <dl class="dl-row__list">
           <dd>PCLATH:</dd>
-          <dt>0x0000</dt>
+          <dt>0x{{ asmFile.ram.pclath.toString(16).padStart(4, '0') }}</dt>
         </dl>
         <dl class="dl-row__list">
           <dd>C:</dd>
-          <dt>0x0000</dt>
+          <dt>0x{{ asmFile.ram.carry.toString(16).padStart(4, '0') }}</dt>
         </dl>
         <dl class="dl-row__list">
           <dd>DC:</dd>
-          <dt>0x0000</dt>
+          <dt>0x{{ asmFile.ram.digitCarry.toString(16).padStart(4, '0') }}</dt>
         </dl>
         <dl class="dl-row__list">
           <dd>Z:</dd>
-          <dt>0x0000</dt>
+          <dt>0x{{ asmFile.ram.zeroFlag.toString(16).padStart(4, '0') }}</dt>
         </dl>
       </article>
       <article
@@ -108,74 +141,74 @@
                       <tr>
                         <td>INDF</td>
                         <td>0x00</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[0].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[0].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>TMRO</td>
                         <td>0x01</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[1].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[1].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>PCL</td>
                         <td>0x02</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[2].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[2].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>Status</td>
                         <td>0x03</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[3].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[3].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>FSR</td>
                         <td>0x04</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[4].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[4].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>PORTA</td>
                         <td>0x05</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[5].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[5].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>PORTB</td>
                         <td>0x06</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[6].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[6].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td></td>
                         <td>0x07</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[7].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[7].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>EEDATA</td>
                         <td>0x08</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[8].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[8].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>EEADR</td>
                         <td>0x09</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[9].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[9].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>PCLATH</td>
                         <td>0x0A</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[10].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[10].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>INTCON</td>
                         <td>0x0B</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank0[11].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank0[11].toString(2).padStart(8, '0') }}</td>
                       </tr>
                     </tbody>
                     <thead>
@@ -188,74 +221,74 @@
                       <tr>
                         <td>INDF</td>
                         <td>0x80</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[0].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[0].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>OPTION_ REG</td>
                         <td>0x81</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[1].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[1].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>PCL</td>
                         <td>0x82</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[2].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[2].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>Status</td>
                         <td>0x83</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[3].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[3].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>FSR</td>
                         <td>0x84</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[4].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[4].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>TRISA</td>
                         <td>0x85</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[5].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[5].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>TRISB</td>
                         <td>0x86</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[6].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[6].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td></td>
                         <td>0x87</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[7].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[7].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>EECON1</td>
                         <td>0x88</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[8].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[8].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>EECON2</td>
                         <td>0x89</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[9].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[9].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>PCLATH</td>
                         <td>0x8A</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[10].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[10].toString(2).padStart(8, '0') }}</td>
                       </tr>
                       <tr>
                         <td>INTCON</td>
                         <td>0x8B</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
+                        <td>0x{{ asmFile.ram.bank1[11].toString(16).padStart(2, '0') }}</td>
+                        <td>0b{{ asmFile.ram.bank1[11].toString(2).padStart(8, '0') }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -276,12 +309,30 @@
                       <th>Value (Binary)</th>
                     </thead>
                     <tbody>
-                      @for (item of gprValues; track $index) {
-                        <tr>
-                          <td>0x00</td>
-                          <td>0x00</td>
-                          <td>0b00000000</td>
-                        </tr>
+                      @for (item of asmFile.ram.bank0; track $index) {
+                        @if ($index > 11) {
+                          <tr>
+                            <td>0x{{ $index.toString(16).padStart(2, '0').toUpperCase() }}</td>
+                            <td>0x{{ item.toString(16).padStart(2, '0').toUpperCase() }}</td>
+                            <td>0b{{ item.toString(2).padStart(8, '0') }}</td>
+                          </tr>
+                        }
+                      }
+                    </tbody>
+                    <thead>
+                      <th>Address</th>
+                      <th>Value (Hex)</th>
+                      <th>Value (Binary)</th>
+                    </thead>
+                    <tbody>
+                      @for (item of asmFile.ram.bank1; track $index) {
+                        @if ($index > 11) {
+                          <tr>
+                            <td>0x{{ (128 + $index).toString(16).padStart(2, '0').toUpperCase() }}</td>
+                            <td>0x{{ item.toString(16).padStart(2, '0').toUpperCase() }}</td>
+                            <td>0b{{ item.toString(2).padStart(8, '0') }}</td>
+                          </tr>
+                        }
                       }
                     </tbody>
                   </table>
@@ -302,46 +353,13 @@
                       <th>Value (Binary)</th>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>0</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
-                      </tr>
-                      <tr>
-                        <td>5</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
-                      </tr>
-                      <tr>
-                        <td>6</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
-                      </tr>
-                      <tr>
-                        <td>7</td>
-                        <td>0x00</td>
-                        <td>0b00000000</td>
-                      </tr>
+                      @for (item of asmFile.ram.tos; track $index) {
+                        <tr>
+                          <td>{{ $index }}</td>
+                          <td>0x{{ item.toString(16).padStart(2, '0').toUpperCase() }}</td>
+                          <td>0b{{ item.toString(2).padStart(8, '0') }}</td>
+                        </tr>
+                      }
                     </tbody>
                   </table>
                 </div>
@@ -388,22 +406,19 @@
                     <td>X</td>
                     <td>X</td>
                     <td>X</td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
+                    @for (item of asmFile.ioPins.portA; track $index) {
+                      <td>
+                        <button mat-raised-button>{{ item }}</button>
+                      </td>
+                    }
                   </tr>
                   <tr>
                     <td>B</td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
+                    @for (item of asmFile.ioPins.portB; track $index) {
+                      <td>
+                        <button mat-raised-button>{{ item }}</button>
+                      </td>
+                    }
                   </tr>
                 </tbody>
               </table>
@@ -427,22 +442,19 @@
                     <td>X</td>
                     <td>X</td>
                     <td>X</td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
+                    @for (item of asmFile.ioPins.trisA; track $index) {
+                      <td>
+                        <button mat-raised-button>{{ item }}</button>
+                      </td>
+                    }
                   </tr>
                   <tr>
                     <td>B</td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
-                    <td><button mat-raised-button>0</button></td>
+                    @for (item of asmFile.ioPins.trisB; track $index) {
+                      <td>
+                        <button mat-raised-button>{{ item }}</button>
+                      </td>
+                    }
                   </tr>
                 </tbody>
               </table>
@@ -454,7 +466,7 @@
     <hr />
     <mat-form-field class="console-text">
       <mat-label>Console</mat-label>
-      <textarea matInput placeholder="Console"></textarea>
+      <textarea matInput placeholder="Console" readonly="true"></textarea>
     </mat-form-field>
   </section>
 </main>
