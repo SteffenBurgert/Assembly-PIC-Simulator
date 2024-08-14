@@ -1,0 +1,10 @@
+<div class="blur-background"></div>
+<mat-card class="error-container" appearance="outlined">
+  <mat-card-header class="error-header">An error occurred!</mat-card-header>
+  <mat-card-content class="error-content">
+    <p>{{ message }}</p>
+    <div class="error-button">
+      <button mat-raised-button (click)="closeErrorModal()"><span>OK</span></button>
+    </div>
+  </mat-card-content>
+</mat-card>

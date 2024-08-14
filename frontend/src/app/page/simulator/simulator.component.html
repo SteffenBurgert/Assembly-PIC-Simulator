@@ -470,3 +470,7 @@
     </mat-form-field>
   </section>
 </main>
+
+@if (isError) {
+  <asm-pic-error-modal [message]="errorMessage" (closed)="closeError($event)"></asm-pic-error-modal>
+}
