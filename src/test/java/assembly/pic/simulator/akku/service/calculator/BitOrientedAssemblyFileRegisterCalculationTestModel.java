@@ -61,7 +61,7 @@ class BitOrientedAssemblyFileRegisterCalculationTestModel {
 
     @Test
     void btfsc() {
-        assertThat(ram.getProgramCounter()).isEqualTo(0);
+        assertThat(ram.getProgramCounter()).isZero();
         ram.setGeneralPurposeRegisterBank0(20, 10);
         bitOrientedFileRegisterCalculation.btfsc(20, ram, programTimer);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
@@ -81,7 +81,7 @@ class BitOrientedAssemblyFileRegisterCalculationTestModel {
 
     @Test
     void btfss() {
-        assertThat(ram.getProgramCounter()).isEqualTo(0);
+        assertThat(ram.getProgramCounter()).isZero();
         ram.setGeneralPurposeRegisterBank0(20, 11);
         bitOrientedFileRegisterCalculation.btfss(20, ram, programTimer);
         assertThat(ram.getProgramCounter()).isEqualTo(1);

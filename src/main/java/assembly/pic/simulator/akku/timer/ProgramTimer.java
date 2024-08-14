@@ -17,7 +17,7 @@ public class ProgramTimer {
     }
 
     public void calculateTimer(int cycles, Ram ram) {
-        timer += (double) cycles / quartzTact;
+        timer += cycles / quartzTact;
         // Timer mode
         if (ram.getOptionReg(OptionReg.T0CS) == 0) {
             for (int i = 0; i < cycles; i++) {

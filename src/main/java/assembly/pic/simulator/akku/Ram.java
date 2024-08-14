@@ -14,12 +14,12 @@ public class Ram {
     @Getter
     private int programCounter = 0;
     @Getter
-    private final static int bankSize = 128;
-    private final static int specialPurposeRegisterSize = 12;
+    private static final int BANK_SIZE = 128;
+    private static final int SPECIAL_PURPOSE_REGISTER_SIZE = 12;
     @Getter
-    private final List<Integer> bank0 = new ArrayList<>(bankSize);
+    private final List<Integer> bank0 = new ArrayList<>(BANK_SIZE);
     @Getter
-    private final List<Integer> bank1 = new ArrayList<>(bankSize);
+    private final List<Integer> bank1 = new ArrayList<>(BANK_SIZE);
     private List<Integer> tos = new ArrayList<>();
     private int tosPointer = -1;
 
@@ -31,7 +31,7 @@ public class Ram {
      * Constructor initializes Ram
      */
     public Ram() {
-        for (int i = 0; i < bankSize; i++) {
+        for (int i = 0; i < BANK_SIZE; i++) {
             bank0.add(0);
             bank1.add(0);
         }
@@ -96,7 +96,7 @@ public class Ram {
     }
 
     public void setGeneralPurposeRegister(int position, int value) {
-        if (getStatus(Status.RP0) == 0 && position < specialPurposeRegisterSize) {
+        if (getStatus(Status.RP0) == 0 && position < SPECIAL_PURPOSE_REGISTER_SIZE) {
             if (SpecialPurpose.INDF.location == position) {
                 setINDF(value);
             } else if (SpecialPurpose.TMR0.location == position) {
@@ -121,7 +121,7 @@ public class Ram {
             } else if (SpecialPurpose.INTCON.location == position) {
                 setINTCON(value);
             }
-        } else if (getStatus(Status.RP0) == 1 && position < specialPurposeRegisterSize) {
+        } else if (getStatus(Status.RP0) == 1 && position < SPECIAL_PURPOSE_REGISTER_SIZE) {
             if (SpecialPurpose.INDF.location == position) {
                 setINDF(value);
             } else if (SpecialPurpose.OPTION_REG.location == position) {
@@ -148,7 +148,7 @@ public class Ram {
             }
         } else {
             if (getStatus(Status.RP0) == 1) {
-                if (position >= bankSize) position -= bankSize;
+                if (position >= BANK_SIZE) position -= BANK_SIZE;
                 setGeneralPurposeRegisterBank1(position, value);
             } else {
                 setGeneralPurposeRegisterBank0(position, value);
@@ -329,13 +329,14 @@ public class Ram {
     }
 
     private void increaseTRM0inCounterMode(PortA portA, int value) {
-        if (portA == PortA.RA4_T0CKI && getOptionReg(OptionReg.T0CS) == 1) {
-            if (getOptionReg(OptionReg.T0SE) == 0 && getPortA(PortA.RA4_T0CKI) == 0 && value == 1) {
-                processPrescaler();
-            } else if (getOptionReg(OptionReg.T0SE) == 1 && getPortA(PortA.RA4_T0CKI) == 1 && value == 0) {
-                processPrescaler();
-            }
+        if (
+                portA == PortA.RA4_T0CKI && getOptionReg(OptionReg.T0CS) == 1 &&
+                        (getOptionReg(OptionReg.T0SE) == 0 && getPortA(PortA.RA4_T0CKI) == 0 && value == 1 ||
+                                getOptionReg(OptionReg.T0SE) == 1 && getPortA(PortA.RA4_T0CKI) == 1 && value == 0)
+        ) {
+            processPrescaler();
         }
+
     }
 
     private void processPrescaler() {
@@ -400,11 +401,10 @@ public class Ram {
 
     public void setPortB(int value) {
         int rb0 = value & 1;
-        if (rb0 != getPortB(PortB.RB0_INT) && getTrisB(PortB.RB0_INT) == 1) {
-            if (getOptionReg(OptionReg.INTEDG) == value) {
-                setINTCON(Intcon.INTF, 1);
-            }
+        if (rb0 != getPortB(PortB.RB0_INT) && getTrisB(PortB.RB0_INT) == 1 && getOptionReg(OptionReg.INTEDG) == value) {
+            setINTCON(Intcon.INTF, 1);
         }
+
         bank0.set(SpecialPurpose.PORT_B.location, value);
     }
 

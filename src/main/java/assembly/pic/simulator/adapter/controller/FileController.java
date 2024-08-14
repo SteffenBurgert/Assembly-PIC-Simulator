@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class FileController {
 
     private final AssemblyCompilerService assemblyCompilerService;
-    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
+    private final Logger log = Logger.getLogger(this.getClass().getName());
 
     public FileController(AssemblyCompilerService assemblyCompilerService) {
         this.assemblyCompilerService = assemblyCompilerService;
@@ -26,11 +26,11 @@ public class FileController {
     ) {
         Result<AssemblyFileModel> result = assemblyCompilerService.initializeSimulator(file);
         if (result.isSuccess()) {
-            LOGGER.info("Assembly file: " + file.getOriginalFilename() + " uploaded");
+            log.info("Assembly file: " + file.getOriginalFilename() + " uploaded");
             return ResponseEntity.ok(result.getValue());
         }
 
-        LOGGER.info("Could not upload file " + file.getOriginalFilename() + ", do to: " + result.getError().getMessage());
+        log.info("Could not upload file " + file.getOriginalFilename() + ", do to: " + result.getError().getMessage());
         return ResponseEntity.badRequest().body(result.getError());
     }
 }

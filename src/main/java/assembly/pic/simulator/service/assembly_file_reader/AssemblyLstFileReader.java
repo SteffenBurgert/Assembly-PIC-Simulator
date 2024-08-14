@@ -14,11 +14,11 @@ import java.util.logging.Logger;
 @Service
 public class AssemblyLstFileReader {
 
-    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
+    private final Logger log = Logger.getLogger(this.getClass().getName());
 
     public AssemblyLstFile readFile(MultipartFile file) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream(), Charset.forName("ISO-8859-15")))) {
-            LOGGER.info("Started reading " + file.getOriginalFilename() + " file.");
+            log.info("Started reading " + file.getOriginalFilename() + " file.");
             String line = bufferedReader.readLine();
             List<LstLineModel> lstLines = new ArrayList<>();
             Map<Integer, LstOpcodeAndLine> assemblerArguments = new HashMap<>();
@@ -31,10 +31,10 @@ public class AssemblyLstFileReader {
                 line = bufferedReader.readLine();
             }
 
-            LOGGER.info("Finished reading " + file.getOriginalFilename() + " file.");
+            log.info("Finished reading " + file.getOriginalFilename() + " file.");
             return new AssemblyLstFile(lstLines, assemblerArguments);
         } catch (IOException e) {
-            LOGGER.warning("Problem with reading File: " + file.getOriginalFilename() + " error message: " + e.getMessage());
+            log.warning("Problem with reading File: " + file.getOriginalFilename() + " error message: " + e.getMessage());
             throw e;
         }
     }

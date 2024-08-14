@@ -36,9 +36,9 @@ class LiteralAndControlOperationsCalculationTest {
         literalAndControlOperationsCalculation.addlw(100, ram, programTimer);
 
         assertThat(ram.getWRegister()).isEqualTo(100);
-        assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.CARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.DCARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
         assertThat(programTimer.getTimer()).isEqualTo(0.25);
     }
 
@@ -49,8 +49,8 @@ class LiteralAndControlOperationsCalculationTest {
 
         assertThat(ram.getWRegister()).isEqualTo(44);
         assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(1);
-        assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.DCARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
         assertThat(programTimer.getTimer()).isEqualTo(0.25);
     }
 
@@ -61,9 +61,9 @@ class LiteralAndControlOperationsCalculationTest {
         literalAndControlOperationsCalculation.addlw(100, ram, programTimer);
 
         assertThat(ram.getWRegister()).isEqualTo(144);
-        assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.CARRY_BIT)).isZero();
         assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(1);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
         assertThat(programTimer.getTimer()).isEqualTo(0.25);
     }
 
@@ -72,9 +72,9 @@ class LiteralAndControlOperationsCalculationTest {
         literalAndControlOperationsCalculation.addlw(4, ram, programTimer);
 
         assertThat(ram.getWRegister()).isEqualTo(4);
-        assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.CARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.DCARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
         assertThat(programTimer.getTimer()).isEqualTo(0.25);
     }
 
@@ -82,9 +82,9 @@ class LiteralAndControlOperationsCalculationTest {
     void testAddlwWithZeroBit1() {
         literalAndControlOperationsCalculation.addlw(0, ram, programTimer);
 
-        assertThat(ram.getWRegister()).isEqualTo(0);
-        assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
+        assertThat(ram.getStatus(Status.CARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.DCARRY_BIT)).isZero();
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
         assertThat(programTimer.getTimer()).isEqualTo(0.25);
     }
@@ -98,7 +98,7 @@ class LiteralAndControlOperationsCalculationTest {
     void andlwWithZeroBit0() {
         literalAndControlOperationsCalculation.andlw(12, ram, programTimer);
 
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
         assertThat(programTimer.getTimer()).isEqualTo(0.25);
     }
@@ -109,7 +109,7 @@ class LiteralAndControlOperationsCalculationTest {
         literalAndControlOperationsCalculation.andlw(10, ram, programTimer);
 
         assertThat(ram.getWRegister()).isEqualTo(8);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
         assertThat(programTimer.getTimer()).isEqualTo(0.25);
     }
 
@@ -163,7 +163,7 @@ class LiteralAndControlOperationsCalculationTest {
     void iorlwWithZeroBit0() {
         literalAndControlOperationsCalculation.iorlw(0, ram, programTimer);
 
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
     }
 
@@ -173,7 +173,7 @@ class LiteralAndControlOperationsCalculationTest {
         literalAndControlOperationsCalculation.iorlw(12, ram, programTimer);
 
         assertThat(ram.getWRegister()).isEqualTo(13);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
     }
 
     /**

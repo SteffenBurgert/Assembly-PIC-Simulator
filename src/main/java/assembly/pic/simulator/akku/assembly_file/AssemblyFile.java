@@ -3,13 +3,13 @@ package assembly.pic.simulator.akku.assembly_file;
 import java.util.List;
 import java.util.Map;
 
-public interface AssemblyFile<File, OpcodeAndLine> {
+public interface AssemblyFile<F, O> {
 
-    void setFile(List<File> file);
+    void setFile(List<F> file);
 
-    void setOperations(Map<Integer, OpcodeAndLine> operations);
+    void setOperations(Map<Integer, O> operations);
 
-    List<File> getFile();
+    List<F> getFile();
 
-    Map<Integer, OpcodeAndLine> getOperations();
+    Map<Integer, O> getOperations();
 }

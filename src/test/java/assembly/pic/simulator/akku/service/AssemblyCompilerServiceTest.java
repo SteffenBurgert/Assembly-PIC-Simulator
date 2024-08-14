@@ -20,17 +20,17 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AssemblyCompilerServiceTest {
+class AssemblyCompilerServiceTest {
 
-    private final LogCaptor LOGGER = LogCaptor.forClass(AssemblyCompilerService.class);
+    private final LogCaptor log = LogCaptor.forClass(AssemblyCompilerService.class);
 
     @AfterEach
     void cleanUp() {
-        LOGGER.clearLogs();
+        log.clearLogs();
     }
 
     @Test
-    void uploadLstFile() {
+    void uploadLstFile() throws IOException {
         AssemblyLstFileReader assemblyLstFileReaderMock = Mockito.mock(AssemblyLstFileReader.class);
 
         AssemblyCompilerService assemblyCompilerService = new AssemblyCompilerService(
@@ -47,13 +47,10 @@ public class AssemblyCompilerServiceTest {
 
         Result<AssemblyFileModel> assemblyFileModel = null;
 
-        try {
-            MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain", new FileInputStream("src/test/resources/testReadFile.LST"));
-            Mockito.when(assemblyLstFileReaderMock.readFile(file)).thenReturn(assemblyLstFileMock);
+        MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain", new FileInputStream("src/test/resources/testReadFile.LST"));
+        Mockito.when(assemblyLstFileReaderMock.readFile(file)).thenReturn(assemblyLstFileMock);
 
-            assemblyFileModel = assemblyCompilerService.initializeSimulator(file);
-        } catch (Exception ignored) {
-        }
+        assemblyFileModel = assemblyCompilerService.initializeSimulator(file);
 
         assert assemblyFileModel != null;
         assertThat(assemblyFileModel.getValue()).satisfies(
@@ -72,16 +69,16 @@ public class AssemblyCompilerServiceTest {
                 }
         );
 
-        assertThat(LOGGER.getInfoLogs()).hasSize(1);
-        assertThat(LOGGER.getWarnLogs()).hasSize(0);
-        assertThat(LOGGER.getErrorLogs()).hasSize(0);
-        assertThat(LOGGER.getInfoLogs()).containsExactly(
+        assertThat(log.getInfoLogs()).hasSize(1);
+        assertThat(log.getWarnLogs()).isEmpty();
+        assertThat(log.getErrorLogs()).isEmpty();
+        assertThat(log.getInfoLogs()).containsExactly(
                 "Assembly model for " + fileName + " build successfully."
         );
     }
 
     @Test
-    void uploadFaultyLstFile() {
+    void uploadFaultyLstFile() throws IOException {
         AssemblyLstFileReader assemblyLstFileReaderMock = Mockito.mock(AssemblyLstFileReader.class);
 
         AssemblyCompilerService assemblyCompilerService = new AssemblyCompilerService(
@@ -93,13 +90,10 @@ public class AssemblyCompilerServiceTest {
 
         Result<AssemblyFileModel> assemblyFileModel = null;
 
-        try {
-            MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain", new FileInputStream("src/test/resources/testReadFile.LST"));
-            Mockito.when(assemblyLstFileReaderMock.readFile(file)).thenThrow(IOException.class);
+        MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain", new FileInputStream("src/test/resources/testReadFile.LST"));
+        Mockito.when(assemblyLstFileReaderMock.readFile(file)).thenThrow(IOException.class);
 
-            assemblyFileModel = assemblyCompilerService.initializeSimulator(file);
-        } catch (Exception ignored) {
-        }
+        assemblyFileModel = assemblyCompilerService.initializeSimulator(file);
 
         assert assemblyFileModel != null;
         assertThat(assemblyFileModel.getError()).satisfies(
@@ -109,16 +103,16 @@ public class AssemblyCompilerServiceTest {
                 }
         );
 
-        assertThat(LOGGER.getInfoLogs()).hasSize(0);
-        assertThat(LOGGER.getWarnLogs()).hasSize(1);
-        assertThat(LOGGER.getErrorLogs()).hasSize(0);
-        assertThat(LOGGER.getWarnLogs()).containsExactly(
+        assertThat(log.getInfoLogs()).isEmpty();
+        assertThat(log.getWarnLogs()).hasSize(1);
+        assertThat(log.getErrorLogs()).isEmpty();
+        assertThat(log.getWarnLogs()).containsExactly(
                 "Couldn't read lst file. Reason: null"
         );
     }
 
     @Test
-    void uploadUnknownFile() {
+    void uploadUnknownFile() throws IOException {
         AssemblyLstFileReader assemblyLstFileReaderMock = Mockito.mock(AssemblyLstFileReader.class);
 
         AssemblyCompilerService assemblyCompilerService = new AssemblyCompilerService(
@@ -130,13 +124,10 @@ public class AssemblyCompilerServiceTest {
 
         Result<AssemblyFileModel> assemblyFileModel = null;
 
-        try {
-            MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain", new FileInputStream("src/test/resources/testReadFile.LST"));
-            Mockito.when(assemblyLstFileReaderMock.readFile(file)).thenThrow(IOException.class);
+        MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain", new FileInputStream("src/test/resources/testReadFile.LST"));
+        Mockito.when(assemblyLstFileReaderMock.readFile(file)).thenThrow(IOException.class);
 
-            assemblyFileModel = assemblyCompilerService.initializeSimulator(file);
-        } catch (Exception ignored) {
-        }
+        assemblyFileModel = assemblyCompilerService.initializeSimulator(file);
 
         assert assemblyFileModel != null;
         assertThat(assemblyFileModel.getError()).satisfies(
@@ -146,10 +137,10 @@ public class AssemblyCompilerServiceTest {
                 }
         );
 
-        assertThat(LOGGER.getInfoLogs()).hasSize(0);
-        assertThat(LOGGER.getWarnLogs()).hasSize(1);
-        assertThat(LOGGER.getErrorLogs()).hasSize(0);
-        assertThat(LOGGER.getWarnLogs()).containsExactly(
+        assertThat(log.getInfoLogs()).isEmpty();
+        assertThat(log.getWarnLogs()).hasSize(1);
+        assertThat(log.getErrorLogs()).isEmpty();
+        assertThat(log.getWarnLogs()).containsExactly(
                 "Unknown filetype: unknown"
         );
     }

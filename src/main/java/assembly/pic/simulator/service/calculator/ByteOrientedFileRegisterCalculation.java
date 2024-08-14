@@ -216,8 +216,12 @@ public class ByteOrientedFileRegisterCalculation implements
                 case 0: {
                     int fsr = ram.getFSR();
                     ram.setGeneralPurposeRegister(fsr, result);
+                    break;
                 }
-                case 4: ram.setFSR(result);
+                case 4: {
+                    ram.setFSR(result);
+                    break;
+                }
                 default: ram.setGeneralPurposeRegister(f, result);
             }
         } else {

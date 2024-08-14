@@ -8,6 +8,7 @@ import assembly.pic.simulator.model.assembly_file.AssemblyFileModel;
 import assembly.pic.simulator.model.assembly_file.FileType;
 import assembly.pic.simulator.model.assembly_file.LstLineModel;
 import assembly.pic.simulator.service.assembly_file_reader.AssemblyLstFileReader;
+import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +23,7 @@ public class AssemblyCompilerService {
 
     private final RamModelMapper ramModelMapper;
     private final AssemblyLstFileReader assemblyLstFileReader;
-    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
+    private final Logger log = Logger.getLogger(this.getClass().getName());
 
     public AssemblyCompilerService(RamModelMapper ramModelMapper, AssemblyLstFileReader assemblyLstFileReader) {
         this.ramModelMapper = ramModelMapper;
@@ -45,7 +46,7 @@ public class AssemblyCompilerService {
                     assemblyFileModels = assemblyLstFileReader.readFile(file).getFile();
                 } catch (IOException e) {
                     String exception = "Couldn't read lst file.";
-                    LOGGER.warning(exception + " Reason: " + e.getMessage());
+                    log.warning(exception + " Reason: " + e.getMessage());
                     return Result.failure(new IOException(exception));
                 }
 
@@ -58,15 +59,19 @@ public class AssemblyCompilerService {
             }
 
             assemblyFileModel.setFileName(file.getOriginalFilename());
-            LOGGER.info("Assembly model for " + file.getOriginalFilename() + " build successfully.");
+            log.info("Assembly model for " + file.getOriginalFilename() + " build successfully.");
             return Result.success(assemblyFileModel);
         }
 
-        String[] fileParts = file.getOriginalFilename().split("\\.");
-        String fileType = fileParts[fileParts.length - 1];
+        String originalFilename = file.getOriginalFilename();
+        String fileType = "";
 
-        String fileTypeError = "Unknown filetype: " + fileType;
-        LOGGER.warning(fileTypeError);
+        if (originalFilename != null && originalFilename.contains(".")) {
+            fileType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+        }
+
+        String fileTypeError = fileType.isEmpty() ? "Filetype NOT PRESENT" : "Unknown filetype: " + fileType;
+        log.warning(fileTypeError);
         return Result.failure(new Exception(fileTypeError));
     }
 }

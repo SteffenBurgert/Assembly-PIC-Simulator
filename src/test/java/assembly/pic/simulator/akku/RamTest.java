@@ -11,7 +11,7 @@ class RamTest {
 
     private static Ram ram;
 
-    private static final int maxBankSize = 128;
+    private static final int MAX_BANK_SIZE = 128;
 
     @BeforeEach
     public void setup() {
@@ -19,12 +19,12 @@ class RamTest {
     }
 
     private void bankSizeCheck() {
-        assertThat(ram.getBank0().size()).isEqualTo(maxBankSize);
-        assertThat(ram.getBank1().size()).isEqualTo(maxBankSize);
+        assertThat(ram.getBank0()).hasSize(MAX_BANK_SIZE);
+        assertThat(ram.getBank1()).hasSize(MAX_BANK_SIZE);
     }
 
     @Test
-    public void testRamSetup() {
+    void testRamSetup() {
         // STATUS
         assertThat(ram.getStatus()).isEqualTo(24);
         assertThat(ram.getGeneralPurposeRegisterBank0(SpecialPurpose.STATUS.location)).isEqualTo(24);
@@ -39,57 +39,57 @@ class RamTest {
     }
 
     @Test
-    public void testGeneralPurposeRegisterBank1() {
-        assertThat(ram.getGeneralPurposeRegisterBank0(20)).isEqualTo(0);
+    void testGeneralPurposeRegisterBank1() {
+        assertThat(ram.getGeneralPurposeRegisterBank0(20)).isZero();
         ram.setGeneralPurposeRegisterBank0(20, 31);
         assertThat(ram.getGeneralPurposeRegisterBank0(20)).isEqualTo(31);
         bankSizeCheck();
     }
 
     @Test
-    public void testGeneralPurposeRegisterBank2() {
-        assertThat(ram.getGeneralPurposeRegisterBank1(30)).isEqualTo(0);
+    void testGeneralPurposeRegisterBank2() {
+        assertThat(ram.getGeneralPurposeRegisterBank1(30)).isZero();
         ram.setGeneralPurposeRegisterBank1(30, 50);
         assertThat(ram.getGeneralPurposeRegisterBank1(30)).isEqualTo(50);
         bankSizeCheck();
     }
 
     @Test
-    public void testWRegister() {
-        assertThat(ram.getWRegister()).isEqualTo(0);
+    void testWRegister() {
+        assertThat(ram.getWRegister()).isZero();
         ram.setWRegister(12);
         assertThat(ram.getWRegister()).isEqualTo(12);
         bankSizeCheck();
     }
 
     @Test
-    public void testProgramCounter() {
-        assertThat(ram.getProgramCounter()).isEqualTo(0);
-        assertThat(ram.getPCL()).isEqualTo(0);
-        assertThat(ram.getPCLATH()).isEqualTo(0);
+    void testProgramCounter() {
+        assertThat(ram.getProgramCounter()).isZero();
+        assertThat(ram.getPCL()).isZero();
+        assertThat(ram.getPCLATH()).isZero();
 
         ram.increaseProgramCounter();
         assertThat(ram.getProgramCounter()).isEqualTo(1);
         assertThat(ram.getPCL()).isEqualTo(1);
-        assertThat(ram.getPCLATH()).isEqualTo(0);
+        assertThat(ram.getPCLATH()).isZero();
 
         ram.setProgramCounter(111);
         assertThat(ram.getProgramCounter()).isEqualTo(111);
         assertThat(ram.getPCL()).isEqualTo(111);
-        assertThat(ram.getPCLATH()).isEqualTo(0);
+        assertThat(ram.getPCLATH()).isZero();
         bankSizeCheck();
     }
 
     @Test
-    public void setProgramCounterCallGoto() {
-        assertThat(ram.getProgramCounter()).isEqualTo(0);
-        assertThat(ram.getPCL()).isEqualTo(0);
-        assertThat(ram.getPCLATH()).isEqualTo(0);
+    void setProgramCounterCallGoto() {
+        assertThat(ram.getProgramCounter()).isZero();
+        assertThat(ram.getPCL()).isZero();
+        assertThat(ram.getPCLATH()).isZero();
 
         ram.setProgramCounterCallGoto(1);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
         assertThat(ram.getPCL()).isEqualTo(1);
-        assertThat(ram.getPCLATH()).isEqualTo(0);
+        assertThat(ram.getPCLATH()).isZero();
 
         ram.setGeneralPurposeRegisterBank0(10, 31);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
@@ -104,7 +104,7 @@ class RamTest {
     }
 
     @Test
-    public void testTos() {
+    void testTos() {
         assertThatThrownBy(() -> ram.getTos()).isInstanceOf(IndexOutOfBoundsException.class);
         ram.setTos(33);
         assertThat(ram.getTos()).isEqualTo(33);
@@ -141,23 +141,23 @@ class RamTest {
     }
 
     @Test
-    public void testINDF() {
-        assertThat(ram.getINDF()).isEqualTo(0);
+    void testINDF() {
+        assertThat(ram.getINDF()).isZero();
         ram.setINDF(20);
         assertThat(ram.getINDF()).isEqualTo(20);
         bankSizeCheck();
     }
 
     @Test
-    public void testPCL() {
-        assertThat(ram.getPCL()).isEqualTo(0);
+    void testPCL() {
+        assertThat(ram.getPCL()).isZero();
         ram.setPCL(111);
         assertThat(ram.getPCL()).isEqualTo(111);
         bankSizeCheck();
     }
 
     @Test
-    public void testStatus() {
+    void testStatus() {
         assertThat(ram.getStatus()).isEqualTo(24);
         ram.setStatus(40);
         assertThat(ram.getStatus()).isEqualTo(40);
@@ -165,24 +165,24 @@ class RamTest {
     }
 
     @Test
-    public void testFSR() {
-        assertThat(ram.getFSR()).isEqualTo(0);
+    void testFSR() {
+        assertThat(ram.getFSR()).isZero();
         ram.setFSR(50);
         assertThat(ram.getFSR()).isEqualTo(50);
         bankSizeCheck();
     }
 
     @Test
-    public void testPCLATH() {
-        assertThat(ram.getPCLATH()).isEqualTo(0);
+    void testPCLATH() {
+        assertThat(ram.getPCLATH()).isZero();
         ram.setGeneralPurposeRegisterBank0(10, 50);
         assertThat(ram.getPCLATH()).isEqualTo(50);
         bankSizeCheck();
     }
 
     @Test
-    public void testINTCON() {
-        assertThat(ram.getINTCON()).isEqualTo(0);
+    void testINTCON() {
+        assertThat(ram.getINTCON()).isZero();
         ram.setINTCON(60);
         assertThat(ram.getINTCON()).isEqualTo(60);
         bankSizeCheck();
@@ -193,40 +193,40 @@ class RamTest {
      */
 
     @Test
-    public void testTRM0() {
-        assertThat(ram.getTRM0()).isEqualTo(0);
+    void testTRM0() {
+        assertThat(ram.getTRM0()).isZero();
         ram.setTRM0(70);
         assertThat(ram.getTRM0()).isEqualTo(70);
         bankSizeCheck();
     }
 
     @Test
-    public void testPortA() {
-        assertThat(ram.getPortA()).isEqualTo(0);
+    void testPortA() {
+        assertThat(ram.getPortA()).isZero();
         ram.setPortA(20);
         assertThat(ram.getPortA()).isEqualTo(20);
         bankSizeCheck();
     }
 
     @Test
-    public void testPortB() {
-        assertThat(ram.getPortB()).isEqualTo(0);
+    void testPortB() {
+        assertThat(ram.getPortB()).isZero();
         ram.setPortB(100);
         assertThat(ram.getPortB()).isEqualTo(100);
         bankSizeCheck();
     }
 
     @Test
-    public void testEEDATA() {
-        assertThat(ram.getEEDATA()).isEqualTo(0);
+    void testEEDATA() {
+        assertThat(ram.getEEDATA()).isZero();
         ram.setEEDATA(55);
         assertThat(ram.getEEDATA()).isEqualTo(55);
         bankSizeCheck();
     }
 
     @Test
-    public void testEEADR() {
-        assertThat(ram.getEEADR()).isEqualTo(0);
+    void testEEADR() {
+        assertThat(ram.getEEADR()).isZero();
         ram.setEEADR(77);
         assertThat(ram.getEEADR()).isEqualTo(77);
         bankSizeCheck();
@@ -237,7 +237,7 @@ class RamTest {
      */
 
     @Test
-    public void testOPTION_REG() {
+    void testOPTION_REG() {
         assertThat(ram.getOptionReg()).isEqualTo(255);
         ram.setOptionReg(22);
         assertThat(ram.getOptionReg()).isEqualTo(22);
@@ -245,7 +245,7 @@ class RamTest {
     }
 
     @Test
-    public void testTrisA() {
+    void testTrisA() {
         assertThat(ram.getTrisA()).isEqualTo(31);
         ram.setTrisA(11);
         assertThat(ram.getTrisA()).isEqualTo(11);
@@ -253,7 +253,7 @@ class RamTest {
     }
 
     @Test
-    public void testTrisB() {
+    void testTrisB() {
         assertThat(ram.getTrisB()).isEqualTo(255);
         ram.setTrisB(35);
         assertThat(ram.getTrisB()).isEqualTo(35);
@@ -261,16 +261,16 @@ class RamTest {
     }
 
     @Test
-    public void testEECON1() {
-        assertThat(ram.getEECON1()).isEqualTo(0);
+    void testEECON1() {
+        assertThat(ram.getEECON1()).isZero();
         ram.setEECON1(42);
         assertThat(ram.getEECON1()).isEqualTo(42);
         bankSizeCheck();
     }
 
     @Test
-    public void testEECON2() {
-        assertThat(ram.getEECON2()).isEqualTo(0);
+    void testEECON2() {
+        assertThat(ram.getEECON2()).isZero();
         ram.setEECON2(65);
         assertThat(ram.getEECON2()).isEqualTo(65);
         bankSizeCheck();
