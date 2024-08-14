@@ -69,6 +69,7 @@ $sidebar-gap: 0.5vw;
 footer {
   display: flex;
   height: 5vh;
+  z-index: 900;
   background-color: var(--secondary-blue);
 }
 

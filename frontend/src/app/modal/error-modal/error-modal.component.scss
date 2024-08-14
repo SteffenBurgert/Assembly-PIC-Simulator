@@ -1,0 +1,50 @@
+.error-container {
+    position: absolute;
+    display: flex;
+    margin: 15vh auto;
+        
+    width: clamp(var(--size-30), 25vw, 60vw);
+    height: fit-content;
+    
+    gap: var(--size-15);
+    padding: var(--size-12);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+
+    color: var(--text-white);
+    background-color: var(--error-red);
+}
+
+.blur-background {
+    position: absolute;
+    
+    height: 100dvh;
+    width: 100vw;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 800;
+
+    backdrop-filter: blur(var(--size-10));
+}
+
+.error-header {
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-7);
+}
+
+.error-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-10);
+}
+
+.error-button {
+    display: flex;
+    justify-content: flex-end;
+}

@@ -12,6 +12,7 @@ import { AssemblyFile } from 'src/app/module/assembly-file.module';
 import { takeUntil } from 'rxjs';
 import { Unsub } from 'src/app/utils/unsub.class';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorModalComponent } from '../../modal/error-modal/error-modal.component';
 
 @Component({
   selector: 'asm-pic-simulator',
@@ -25,6 +26,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     MatTabsModule,
     MatCardModule,
     MatIconModule,
+    ErrorModalComponent,
   ],
   templateUrl: './simulator.component.html',
   styleUrl: './simulator.component.scss',
@@ -33,6 +35,9 @@ export class SimulatorComponent extends Unsub {
   isIOopen: boolean = false;
   isRun: boolean = false;
   asmFile: AssemblyFile = new AssemblyFile();
+
+  isError: boolean = false;
+  errorMessage: string | undefined = undefined;
 
   constructor(private uploadFileService: UploadFileService) {
     super();
@@ -44,11 +49,11 @@ export class SimulatorComponent extends Unsub {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
+    const fileInput = event.target as HTMLInputElement;
+    const file: File = fileInput.files![0];
 
     if (file) {
       const formData: FormData = new FormData();
-
       formData.append('file', file);
 
       this.uploadFileService
@@ -57,12 +62,15 @@ export class SimulatorComponent extends Unsub {
         .subscribe({
           next: (assemblyFile: AssemblyFile) => {
             this.asmFile = assemblyFile;
+            fileInput.value = '';
           },
           error: (error: HttpErrorResponse) => {
-            alert(error);
+            this.isError = true;
+            this.errorMessage = error.error.message;
           },
         });
     }
+    fileInput.value = '';
   }
 
   public setResetDebug(index: number): void {
@@ -77,5 +85,9 @@ export class SimulatorComponent extends Unsub {
 
   public resetIsRun(): void {
     this.isRun = false;
+  }
+
+  public closeError(closed: boolean): void {
+    this.isError = !closed;
   }
 }
