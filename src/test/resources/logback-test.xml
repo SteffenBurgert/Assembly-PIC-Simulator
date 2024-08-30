@@ -1,0 +1,4 @@
+<configuration>
+    <logger name="assembly.pic.simulator" level="DEBUG"/>
+    <!-- other configurations -->
+</configuration>

@@ -1,34 +1,42 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.2'
-	id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'assembly.pic.simulator'
 version = '0.0.1'
 
 java {
-	sourceCompatibility = '21'
+    sourceCompatibility = '21'
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-	testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.25.3'
-	testImplementation 'org.springframework:spring-test:5.3.24'
-	testImplementation 'io.github.hakky54:logcaptor:2.9.3'
-	testImplementation 'org.mockito:mockito-core:5.5.0'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    implementation 'org.slf4j:slf4j-api:2.0.16'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.25.3'
+    testImplementation 'org.springframework:spring-test:5.3.24'
+    testImplementation 'io.github.hakky54:logcaptor:2.9.3'
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

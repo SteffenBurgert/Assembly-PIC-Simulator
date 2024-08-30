@@ -43,7 +43,6 @@ public class LiteralAndControlOperationsCalculation implements LiteralAndControl
 
     @Override
     public void clrwdt(Ram ram, WatchDogTimer watchDogTimer, ProgramTimer programTimer) {
-        // TODO: Test
         watchDogTimer.clearWdtCounter();
         watchDogTimer.clearWdtPrescaler();
         ram.setStatus(Status.TIME_OUT_BIT, 1);

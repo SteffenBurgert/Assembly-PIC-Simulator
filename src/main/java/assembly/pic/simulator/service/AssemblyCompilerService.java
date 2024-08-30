@@ -8,6 +8,8 @@ import assembly.pic.simulator.model.assembly_file.AssemblyFileModel;
 import assembly.pic.simulator.model.assembly_file.FileType;
 import assembly.pic.simulator.model.assembly_file.LstLineModel;
 import assembly.pic.simulator.service.assembly_file_reader.AssemblyLstFileReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,16 +17,16 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 @Service
 public class AssemblyCompilerService {
 
     private final RamModelMapper ramModelMapper;
     private final AssemblyLstFileReader assemblyLstFileReader;
-    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public AssemblyCompilerService(RamModelMapper ramModelMapper, AssemblyLstFileReader assemblyLstFileReader) {
+    public AssemblyCompilerService(RamModelMapper ramModelMapper,
+                                   AssemblyLstFileReader assemblyLstFileReader) {
         this.ramModelMapper = ramModelMapper;
         this.assemblyLstFileReader = assemblyLstFileReader;
     }
@@ -44,9 +46,9 @@ public class AssemblyCompilerService {
                 try {
                     assemblyFileModels = assemblyLstFileReader.readFile(file).getFile();
                 } catch (IOException e) {
-                    String exception = "Couldn't read lst file.";
-                    LOGGER.warning(exception + " Reason: " + e.getMessage());
-                    return Result.failure(new IOException(exception));
+                    log.error("Problem with reading Filﬂe: {} error message: {}", file.getOriginalFilename(),
+                            e.getMessage());
+                    return Result.failure(new IOException("Couldn't read lst file."));
                 }
 
                 assemblyFileModel = new AssemblyFileModel(
@@ -58,15 +60,20 @@ public class AssemblyCompilerService {
             }
 
             assemblyFileModel.setFileName(file.getOriginalFilename());
-            LOGGER.info("Assembly model for " + file.getOriginalFilename() + " build successfully.");
+            log.info("Assembly model for {} build successfully.", file.getOriginalFilename());
             return Result.success(assemblyFileModel);
         }
 
-        String[] fileParts = file.getOriginalFilename().split("\\.");
-        String fileType = fileParts[fileParts.length - 1];
+        String originalFilename = file.getOriginalFilename();
+        String fileType = "";
 
-        String fileTypeError = "Unknown filetype: " + fileType;
-        LOGGER.warning(fileTypeError);
+        if (originalFilename != null && originalFilename.contains(".")) {
+            fileType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+        }
+
+        String fileTypeError =
+                fileType.isEmpty() ? "Filetype is NOT PRESENT" : "Unknown filetype: " + fileType;
+        log.warn(fileTypeError);
         return Result.failure(new Exception(fileTypeError));
     }
 }

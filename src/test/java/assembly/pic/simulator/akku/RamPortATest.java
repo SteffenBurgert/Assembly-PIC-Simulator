@@ -1,13 +1,12 @@
 package assembly.pic.simulator.akku;
 
-import assembly.pic.simulator.akku.Ram;
 import assembly.pic.simulator.akku.ram_enums.PortA;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RamPortATest {
+class RamPortATest {
 
     private static Ram ram;
 
@@ -17,19 +16,19 @@ public class RamPortATest {
     }
 
     @Test
-    public void testRA0() {
-        assertThat(ram.getPortA(PortA.RA0)).isEqualTo(0);
-        assertThat(ram.getPortA()).isEqualTo(0);
+    void testRA0() {
+        assertThat(ram.getPortA(PortA.RA0)).isZero();
+        assertThat(ram.getPortA()).isZero();
 
         ram.setTrisA(PortA.RA0, 0);
         ram.setPortA(PortA.RA0, 1);
-        assertThat(ram.getTrisA(PortA.RA0)).isEqualTo(0);
+        assertThat(ram.getTrisA(PortA.RA0)).isZero();
         assertThat(ram.getPortA(PortA.RA0)).isEqualTo(1);
         assertThat(ram.getPortA()).isEqualTo(1);
 
         ram.setPortA(PortA.RA0, 0);
-        assertThat(ram.getPortA(PortA.RA0)).isEqualTo(0);
-        assertThat(ram.getPortA()).isEqualTo(0);
+        assertThat(ram.getPortA(PortA.RA0)).isZero();
+        assertThat(ram.getPortA()).isZero();
 
         ram.setPortA(20);
         ram.setPortA(PortA.RA0, 1);
@@ -38,9 +37,9 @@ public class RamPortATest {
     }
 
     @Test
-    public void testRA1() {
-        assertThat(ram.getPortA(PortA.RA1)).isEqualTo(0);
-        assertThat(ram.getPortA()).isEqualTo(0);
+    void testRA1() {
+        assertThat(ram.getPortA(PortA.RA1)).isZero();
+        assertThat(ram.getPortA()).isZero();
 
         ram.setTrisA(PortA.RA1, 0);
         ram.setPortA(PortA.RA1, 1);
@@ -48,8 +47,8 @@ public class RamPortATest {
         assertThat(ram.getPortA()).isEqualTo(2);
 
         ram.setPortA(PortA.RA1, 0);
-        assertThat(ram.getPortA(PortA.RA1)).isEqualTo(0);
-        assertThat(ram.getPortA()).isEqualTo(0);
+        assertThat(ram.getPortA(PortA.RA1)).isZero();
+        assertThat(ram.getPortA()).isZero();
 
         ram.setPortA(20);
         ram.setPortA(PortA.RA1, 1);
@@ -58,9 +57,9 @@ public class RamPortATest {
     }
 
     @Test
-    public void testRA2() {
-        assertThat(ram.getPortA(PortA.RA2)).isEqualTo(0);
-        assertThat(ram.getPortA()).isEqualTo(0);
+    void testRA2() {
+        assertThat(ram.getPortA(PortA.RA2)).isZero();
+        assertThat(ram.getPortA()).isZero();
 
         ram.setTrisA(PortA.RA2, 0);
         ram.setPortA(PortA.RA2, 1);
@@ -68,8 +67,8 @@ public class RamPortATest {
         assertThat(ram.getPortA()).isEqualTo(4);
 
         ram.setPortA(PortA.RA2, 0);
-        assertThat(ram.getPortA(PortA.RA2)).isEqualTo(0);
-        assertThat(ram.getPortA()).isEqualTo(0);
+        assertThat(ram.getPortA(PortA.RA2)).isZero();
+        assertThat(ram.getPortA()).isZero();
 
         ram.setPortA(33);
         ram.setTrisA(PortA.RA2, 0);
@@ -79,9 +78,9 @@ public class RamPortATest {
     }
 
     @Test
-    public void testRA3() {
-        assertThat(ram.getPortA(PortA.RA3)).isEqualTo(0);
-        assertThat(ram.getPortA()).isEqualTo(0);
+    void testRA3() {
+        assertThat(ram.getPortA(PortA.RA3)).isZero();
+        assertThat(ram.getPortA()).isZero();
 
         ram.setTrisA(PortA.RA3, 0);
         ram.setPortA(PortA.RA3, 1);
@@ -89,8 +88,8 @@ public class RamPortATest {
         assertThat(ram.getPortA()).isEqualTo(8);
 
         ram.setPortA(PortA.RA3, 0);
-        assertThat(ram.getPortA(PortA.RA3)).isEqualTo(0);
-        assertThat(ram.getPortA()).isEqualTo(0);
+        assertThat(ram.getPortA(PortA.RA3)).isZero();
+        assertThat(ram.getPortA()).isZero();
 
         ram.setPortA(70);
         ram.setPortA(PortA.RA3, 1);
@@ -99,9 +98,9 @@ public class RamPortATest {
     }
 
     @Test
-    public void testRA4_T0CKI() {
-        assertThat(ram.getPortA(PortA.RA4_T0CKI)).isEqualTo(0);
-        assertThat(ram.getPortA()).isEqualTo(0);
+    void testRA4_T0CKI() {
+        assertThat(ram.getPortA(PortA.RA4_T0CKI)).isZero();
+        assertThat(ram.getPortA()).isZero();
 
         ram.setTrisA(PortA.RA4_T0CKI, 0);
         ram.setPortA(PortA.RA4_T0CKI, 1);
@@ -109,8 +108,8 @@ public class RamPortATest {
         assertThat(ram.getPortA()).isEqualTo(16);
 
         ram.setPortA(PortA.RA4_T0CKI, 0);
-        assertThat(ram.getPortA(PortA.RA4_T0CKI)).isEqualTo(0);
-        assertThat(ram.getPortA()).isEqualTo(0);
+        assertThat(ram.getPortA(PortA.RA4_T0CKI)).isZero();
+        assertThat(ram.getPortA()).isZero();
 
         ram.setPortA(70);
         ram.setPortA(PortA.RA4_T0CKI, 1);

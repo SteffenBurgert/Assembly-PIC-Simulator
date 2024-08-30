@@ -22,7 +22,7 @@ class GeneralCalculationTest {
     @Test
     void testSetDCarryADD() {
         generalCalculation.setDCarry(ram, 241, 14, DCOperation.ADD);
-        assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.DCARRY_BIT)).isZero();
         generalCalculation.setDCarry(ram, 241, 15, DCOperation.ADD);
         assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(1);
     }
@@ -33,7 +33,7 @@ class GeneralCalculationTest {
         assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(1);
 
         generalCalculation.setDCarry(ram, 14, 15, DCOperation.SUB);
-        assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.DCARRY_BIT)).isZero();
         generalCalculation.setDCarry(ram, 14, 14, DCOperation.SUB);
         assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(1);
         generalCalculation.setDCarry(ram, 0, 0, DCOperation.SUB);
@@ -43,11 +43,11 @@ class GeneralCalculationTest {
     @Test
     void testSetZeroBit() {
         generalCalculation.setZeroBit(ram, 200);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
         generalCalculation.setZeroBit(ram, 0);
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
         generalCalculation.setZeroBit(ram, 12);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
     }
 
     @Test
@@ -55,26 +55,26 @@ class GeneralCalculationTest {
         int result = generalCalculation.calculateAddOperation(ram, 200, 100);
         assertThat(result).isEqualTo(44);
         assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(1);
-        assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.DCARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         result = generalCalculation.calculateAddOperation(ram, 200, 50);
         assertThat(result).isEqualTo(250);
-        assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.CARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.DCARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         result = generalCalculation.calculateAddOperation(ram, 0, 0);
-        assertThat(result).isEqualTo(0);
-        assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(0);
+        assertThat(result).isZero();
+        assertThat(ram.getStatus(Status.CARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.DCARRY_BIT)).isZero();
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
 
         result = generalCalculation.calculateAddOperation(ram, 1, 15);
         assertThat(result).isEqualTo(16);
-        assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.CARRY_BIT)).isZero();
         assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(1);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
     }
 
@@ -84,25 +84,25 @@ class GeneralCalculationTest {
         assertThat(result).isEqualTo(100);
         assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(1);
         assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(1);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         result = generalCalculation.calculateSubOperation(ram, 200, 50);
         assertThat(result).isEqualTo(150);
         assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(1);
         assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(1);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         result = generalCalculation.calculateSubOperation(ram, 0, 0);
-        assertThat(result).isEqualTo(0);
+        assertThat(result).isZero();
         assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(1);
         assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(1);
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
 
         result = generalCalculation.calculateSubOperation(ram, 1, 15);
         assertThat(result).isEqualTo(242);
-        assertThat(ram.getStatus(Status.CARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.DCARRY_BIT)).isEqualTo(0);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.CARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.DCARRY_BIT)).isZero();
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
     }
 }

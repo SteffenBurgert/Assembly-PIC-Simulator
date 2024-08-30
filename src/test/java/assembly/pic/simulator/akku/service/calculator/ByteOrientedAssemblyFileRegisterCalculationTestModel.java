@@ -65,7 +65,7 @@ class ByteOrientedAssemblyFileRegisterCalculationTestModel {
         byteOrientedFileRegisterCalculation.clrf(23, ram, programTimer);
 
         assertThat(ram.getWRegister()).isEqualTo(20);
-        assertThat(ram.getGeneralPurposeRegisterBank0(23)).isEqualTo(0);
+        assertThat(ram.getGeneralPurposeRegisterBank0(23)).isZero();
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
     }
 
@@ -75,7 +75,7 @@ class ByteOrientedAssemblyFileRegisterCalculationTestModel {
         ram.setGeneralPurposeRegisterBank0(25, 43);
         byteOrientedFileRegisterCalculation.clrw(ram, programTimer);
 
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         assertThat(ram.getGeneralPurposeRegisterBank0(25)).isEqualTo(43);
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
     }
@@ -99,49 +99,49 @@ class ByteOrientedAssemblyFileRegisterCalculationTestModel {
 
     @Test
     void decf() {
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         ram.setGeneralPurposeRegisterBank0(22, 2);
 
         byteOrientedFileRegisterCalculation.decf(22, ram, programTimer);
         assertThat(ram.getWRegister()).isEqualTo(1);
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(2);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         byteOrientedFileRegisterCalculation.decf(150, ram, programTimer);
         assertThat(ram.getWRegister()).isEqualTo(1);
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(1);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         byteOrientedFileRegisterCalculation.decf(150, ram, programTimer);
         assertThat(ram.getWRegister()).isEqualTo(1);
-        assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(0);
+        assertThat(ram.getGeneralPurposeRegisterBank0(22)).isZero();
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
 
         byteOrientedFileRegisterCalculation.decf(150, ram, programTimer);
         assertThat(ram.getWRegister()).isEqualTo(1);
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(255);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
     }
 
     @Test
     void decfsz() {
-        assertThat(ram.getWRegister()).isEqualTo(0);
-        assertThat(ram.getProgramCounter()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
+        assertThat(ram.getProgramCounter()).isZero();
         ram.setGeneralPurposeRegisterBank0(22, 2);
 
         byteOrientedFileRegisterCalculation.decfsz(22, ram, programTimer);
         assertThat(ram.getWRegister()).isEqualTo(1);
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(2);
-        assertThat(ram.getProgramCounter()).isEqualTo(0);
+        assertThat(ram.getProgramCounter()).isZero();
 
         byteOrientedFileRegisterCalculation.decfsz(150, ram, programTimer);
         assertThat(ram.getWRegister()).isEqualTo(1);
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(1);
-        assertThat(ram.getProgramCounter()).isEqualTo(0);
+        assertThat(ram.getProgramCounter()).isZero();
 
         byteOrientedFileRegisterCalculation.decfsz(150, ram, programTimer);
         assertThat(ram.getWRegister()).isEqualTo(1);
-        assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(0);
+        assertThat(ram.getGeneralPurposeRegisterBank0(22)).isZero();
         assertThat(ram.getProgramCounter()).isEqualTo(1);
 
         byteOrientedFileRegisterCalculation.decfsz(150, ram, programTimer);
@@ -152,54 +152,54 @@ class ByteOrientedAssemblyFileRegisterCalculationTestModel {
 
     @Test
     void incf() {
-        assertThat(ram.getWRegister()).isEqualTo(0);
-        assertThat(ram.getProgramCounter()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
+        assertThat(ram.getProgramCounter()).isZero();
         ram.setGeneralPurposeRegisterBank0(22, 255);
 
         byteOrientedFileRegisterCalculation.incf(22, ram, programTimer);
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(255);
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
 
         byteOrientedFileRegisterCalculation.incf(150, ram, programTimer);
-        assertThat(ram.getWRegister()).isEqualTo(0);
-        assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
+        assertThat(ram.getGeneralPurposeRegisterBank0(22)).isZero();
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
 
         byteOrientedFileRegisterCalculation.incf(150, ram, programTimer);
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(1);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         byteOrientedFileRegisterCalculation.incf(150, ram, programTimer);
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(2);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
     }
 
     @Test
     void incfsz() {
-        assertThat(ram.getWRegister()).isEqualTo(0);
-        assertThat(ram.getProgramCounter()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
+        assertThat(ram.getProgramCounter()).isZero();
         ram.setGeneralPurposeRegisterBank0(22, 255);
 
         byteOrientedFileRegisterCalculation.incfsz(22, ram, programTimer);
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(255);
         assertThat(ram.getProgramCounter()).isEqualTo(1);
 
         byteOrientedFileRegisterCalculation.incfsz(150, ram, programTimer);
-        assertThat(ram.getWRegister()).isEqualTo(0);
-        assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
+        assertThat(ram.getGeneralPurposeRegisterBank0(22)).isZero();
         assertThat(ram.getProgramCounter()).isEqualTo(2);
 
         byteOrientedFileRegisterCalculation.incfsz(150, ram, programTimer);
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(1);
         assertThat(ram.getProgramCounter()).isEqualTo(2);
 
         byteOrientedFileRegisterCalculation.incfsz(150, ram, programTimer);
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         assertThat(ram.getGeneralPurposeRegisterBank0(22)).isEqualTo(2);
         assertThat(ram.getProgramCounter()).isEqualTo(2);
     }
@@ -212,7 +212,7 @@ class ByteOrientedAssemblyFileRegisterCalculationTestModel {
         byteOrientedFileRegisterCalculation.iorwf(34, ram, programTimer);
         assertThat(ram.getGeneralPurposeRegisterBank0(34)).isEqualTo(55);
         assertThat(ram.getWRegister()).isEqualTo(63);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         ram.setWRegister(34);
         ram.setGeneralPurposeRegisterBank0(34, 61);
@@ -220,36 +220,36 @@ class ByteOrientedAssemblyFileRegisterCalculationTestModel {
         byteOrientedFileRegisterCalculation.iorwf(162, ram, programTimer);
         assertThat(ram.getGeneralPurposeRegisterBank0(34)).isEqualTo(63);
         assertThat(ram.getWRegister()).isEqualTo(34);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         ram.setWRegister(0);
         ram.setGeneralPurposeRegisterBank0(10, 0);
 
         byteOrientedFileRegisterCalculation.iorwf(10, ram, programTimer);
-        assertThat(ram.getGeneralPurposeRegisterBank0(10)).isEqualTo(0);
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getGeneralPurposeRegisterBank0(10)).isZero();
+        assertThat(ram.getWRegister()).isZero();
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
     }
 
     @Test
     void movf() {
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
         ram.setGeneralPurposeRegisterBank0(27, 20);
         byteOrientedFileRegisterCalculation.movf(27, ram, programTimer);
         assertThat(ram.getWRegister()).isEqualTo(20);
         assertThat(ram.getGeneralPurposeRegisterBank0(27)).isEqualTo(20);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         ram.setGeneralPurposeRegisterBank0(23, 50);
         byteOrientedFileRegisterCalculation.movf(151, ram, programTimer);
         assertThat(ram.getWRegister()).isEqualTo(20);
         assertThat(ram.getGeneralPurposeRegisterBank0(23)).isEqualTo(50);
-        assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(0);
+        assertThat(ram.getStatus(Status.ZERO_BIT)).isZero();
 
         ram.setGeneralPurposeRegisterBank0(27, 0);
         byteOrientedFileRegisterCalculation.movf(27, ram, programTimer);
-        assertThat(ram.getWRegister()).isEqualTo(0);
-        assertThat(ram.getGeneralPurposeRegisterBank0(27)).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
+        assertThat(ram.getGeneralPurposeRegisterBank0(27)).isZero();
         assertThat(ram.getStatus(Status.ZERO_BIT)).isEqualTo(1);
     }
 
@@ -267,7 +267,7 @@ class ByteOrientedAssemblyFileRegisterCalculationTestModel {
     @Test
     void nop() {
         byteOrientedFileRegisterCalculation.nop(0, ram, programTimer);
-        assertThat(ram.getWRegister()).isEqualTo(0);
+        assertThat(ram.getWRegister()).isZero();
     }
 
     @Test
