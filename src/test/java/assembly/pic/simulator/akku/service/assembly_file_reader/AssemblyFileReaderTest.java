@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@ActiveProfiles("testing")
 class AssemblyFileReaderTest {
 
     private final AssemblyLstFileReader assemblyFileReader = new AssemblyLstFileReader();
@@ -32,7 +34,9 @@ class AssemblyFileReaderTest {
     void testReadFile_readFile() throws IOException {
         new AssemblyLstFile(null, null);
         AssemblyFile<LstLineModel, LstOpcodeAndLine> assemblyFile;
-        assemblyFile = assemblyFileReader.readFile(new MockMultipartFile("file", "testReadFile.LST", "text/plain", new FileInputStream("src/test/resources/testReadFile.LST")));
+        assemblyFile = assemblyFileReader.readFile(
+                new MockMultipartFile("file", "testReadFile.LST", "text/plain",
+                        new FileInputStream("src/test/resources/testReadFile.LST")));
 
         assertThat(assemblyFile.getFile()).hasSize(15);
         assertThat(assemblyFile.getFile())
@@ -41,7 +45,8 @@ class AssemblyFileReaderTest {
                     assertThat(fileLine.isDebug()).isFalse();
                     assertThat(fileLine.getLine()).isEmpty();
                     assertThat(fileLine.getOpcode()).isEmpty();
-                    assertThat(fileLine.getAssemblyCode()).isEqualTo("                    00001           ;testReadFileLST");
+                    assertThat(fileLine.getAssemblyCode()).isEqualTo(
+                            "                    00001           ;testReadFileLST");
                 });
         assertThat(assemblyFile.getFile())
                 .element(3)
@@ -49,7 +54,8 @@ class AssemblyFileReaderTest {
                     assertThat(fileLine.isDebug()).isFalse();
                     assertThat(fileLine.getLine()).isEqualTo("0000");
                     assertThat(fileLine.getOpcode()).isEqualTo("3011");
-                    assertThat(fileLine.getAssemblyCode()).isEqualTo("          00004           movlw 11h           ;W = 11h");
+                    assertThat(fileLine.getAssemblyCode()).isEqualTo(
+                            "          00004           movlw 11h           ;W = 11h");
                 });
         assertThat(assemblyFile.getFile())
                 .element(12)
@@ -68,10 +74,11 @@ class AssemblyFileReaderTest {
                     assertThat(fileLine.getAssemblyCode()).isEqualTo("                    00015");
                 });
 
-        assertThat(logCaptor.getInfoLogs()).hasSize(2);
+        assertThat(logCaptor.getInfoLogs()).isEmpty();
+        assertThat(logCaptor.getDebugLogs()).hasSize(2);
         assertThat(logCaptor.getWarnLogs()).isEmpty();
         assertThat(logCaptor.getErrorLogs()).isEmpty();
-        assertThat(logCaptor.getInfoLogs()).containsExactly(
+        assertThat(logCaptor.getDebugLogs()).containsExactly(
                 "Started reading testReadFile.LST file.",
                 "Finished reading testReadFile.LST file."
         );
@@ -80,7 +87,9 @@ class AssemblyFileReaderTest {
     @Test
     void testReadFile_operations() throws IOException {
         AssemblyFile<LstLineModel, LstOpcodeAndLine> assemblyFile;
-        assemblyFile = assemblyFileReader.readFile(new MockMultipartFile("file", "testReadFile.LST", "text/plain", new FileInputStream("src/test/resources/testReadFile.LST")));
+        assemblyFile = assemblyFileReader.readFile(
+                new MockMultipartFile("file", "testReadFile.LST", "text/plain",
+                        new FileInputStream("src/test/resources/testReadFile.LST")));
 
         assertThat(assemblyFile.getOperations()).hasSize(7);
         assertThat(assemblyFile.getOperations().get(0)).satisfies(val -> {
@@ -112,10 +121,11 @@ class AssemblyFileReaderTest {
             assertThat(val.getOpcode()).isEqualTo(0x2806);
         });
 
-        assertThat(logCaptor.getInfoLogs()).hasSize(2);
+        assertThat(logCaptor.getInfoLogs()).isEmpty();
+        assertThat(logCaptor.getDebugLogs()).hasSize(2);
         assertThat(logCaptor.getWarnLogs()).isEmpty();
         assertThat(logCaptor.getErrorLogs()).isEmpty();
-        assertThat(logCaptor.getInfoLogs()).containsExactly(
+        assertThat(logCaptor.getDebugLogs()).containsExactly(
                 "Started reading testReadFile.LST file.",
                 "Finished reading testReadFile.LST file."
         );
@@ -124,15 +134,13 @@ class AssemblyFileReaderTest {
     @Test
     void testReadFile_notExistingFile() throws IOException {
         MultipartFile mockFile = Mockito.mock(MultipartFile.class);
-        Mockito.when(mockFile.getInputStream()).thenThrow(new IOException("(No such file or directory)"));
+        Mockito.when(mockFile.getInputStream())
+                .thenThrow(new IOException("(No such file or directory)"));
 
         assertThatThrownBy(() -> assemblyFileReader.readFile(mockFile)).isInstanceOf(IOException.class);
         assertThat(logCaptor.getInfoLogs()).isEmpty();
-        assertThat(logCaptor.getWarnLogs()).hasSize(1);
+        assertThat(logCaptor.getDebugLogs()).isEmpty();
+        assertThat(logCaptor.getWarnLogs()).isEmpty();
         assertThat(logCaptor.getErrorLogs()).isEmpty();
-        assertThat(logCaptor.getWarnLogs()).containsExactly(
-                "Problem with reading File: null error message: (No such file or directory)"
-        );
     }
-
 }

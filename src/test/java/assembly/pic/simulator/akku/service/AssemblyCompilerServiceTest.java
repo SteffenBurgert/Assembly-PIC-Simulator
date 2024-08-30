@@ -4,7 +4,9 @@ import assembly.pic.simulator.akku.assembly_file.lst.AssemblyLstFile;
 import assembly.pic.simulator.akku.assembly_file.lst.LstOpcodeAndLine;
 import assembly.pic.simulator.exeption.Result;
 import assembly.pic.simulator.mapper.RamModelMapper;
-import assembly.pic.simulator.model.assembly_file.*;
+import assembly.pic.simulator.model.assembly_file.AssemblyFileModel;
+import assembly.pic.simulator.model.assembly_file.FileType;
+import assembly.pic.simulator.model.assembly_file.LstLineModel;
 import assembly.pic.simulator.service.AssemblyCompilerService;
 import assembly.pic.simulator.service.assembly_file_reader.AssemblyLstFileReader;
 import nl.altindag.log.LogCaptor;
@@ -47,7 +49,8 @@ class AssemblyCompilerServiceTest {
 
         Result<AssemblyFileModel> assemblyFileModel = null;
 
-        MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain", new FileInputStream("src/test/resources/testReadFile.LST"));
+        MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain",
+                new FileInputStream("src/test/resources/testReadFile.LST"));
         Mockito.when(assemblyLstFileReaderMock.readFile(file)).thenReturn(assemblyLstFileMock);
 
         assemblyFileModel = assemblyCompilerService.initializeSimulator(file);
@@ -90,7 +93,8 @@ class AssemblyCompilerServiceTest {
 
         Result<AssemblyFileModel> assemblyFileModel = null;
 
-        MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain", new FileInputStream("src/test/resources/testReadFile.LST"));
+        MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain",
+                new FileInputStream("src/test/resources/testReadFile.LST"));
         Mockito.when(assemblyLstFileReaderMock.readFile(file)).thenThrow(IOException.class);
 
         assemblyFileModel = assemblyCompilerService.initializeSimulator(file);
@@ -104,10 +108,10 @@ class AssemblyCompilerServiceTest {
         );
 
         assertThat(log.getInfoLogs()).isEmpty();
-        assertThat(log.getWarnLogs()).hasSize(1);
-        assertThat(log.getErrorLogs()).isEmpty();
-        assertThat(log.getWarnLogs()).containsExactly(
-                "Couldn't read lst file. Reason: null"
+        assertThat(log.getWarnLogs()).isEmpty();
+        assertThat(log.getErrorLogs()).hasSize(1);
+        assertThat(log.getErrorLogs()).containsExactly(
+                "Problem with reading File: testReadFile.LST error message: null"
         );
     }
 
@@ -124,7 +128,8 @@ class AssemblyCompilerServiceTest {
 
         Result<AssemblyFileModel> assemblyFileModel = null;
 
-        MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain", new FileInputStream("src/test/resources/testReadFile.LST"));
+        MockMultipartFile file = new MockMultipartFile("file", fileName, "text/plain",
+                new FileInputStream("src/test/resources/testReadFile.LST"));
         Mockito.when(assemblyLstFileReaderMock.readFile(file)).thenThrow(IOException.class);
 
         assemblyFileModel = assemblyCompilerService.initializeSimulator(file);

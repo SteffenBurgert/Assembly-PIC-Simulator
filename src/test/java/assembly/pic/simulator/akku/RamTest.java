@@ -11,7 +11,7 @@ class RamTest {
 
     private static Ram ram;
 
-    private static final int MAX_BANK_SIZE = 128;
+    private static final int MAX_BANK_SIZE = Ram.getBANK_SIZE();
 
     @BeforeEach
     public void setup() {
@@ -189,7 +189,8 @@ class RamTest {
     }
 
     /**
-     * Register in Bank0 -----------------------------------------------------------------------------------------------
+     * Register in Bank0
+     * -----------------------------------------------------------------------------------------------
      */
 
     @Test
@@ -233,7 +234,8 @@ class RamTest {
     }
 
     /**
-     * Register in Bank1 -----------------------------------------------------------------------------------------------
+     * Register in Bank1
+     * -----------------------------------------------------------------------------------------------
      */
 
     @Test

@@ -3,22 +3,26 @@ package assembly.pic.simulator.service.assembly_file_reader;
 import assembly.pic.simulator.akku.assembly_file.lst.AssemblyLstFile;
 import assembly.pic.simulator.akku.assembly_file.lst.LstOpcodeAndLine;
 import assembly.pic.simulator.model.assembly_file.LstLineModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.*;
-import java.util.logging.Logger;
 
 @Service
 public class AssemblyLstFileReader {
 
-    private final Logger log = Logger.getLogger(this.getClass().getName());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public AssemblyLstFile readFile(MultipartFile file) throws IOException {
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream(), Charset.forName("ISO-8859-15")))) {
-            log.info("Started reading " + file.getOriginalFilename() + " file.");
+        try (BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(file.getInputStream(), Charset.forName("ISO-8859-15")))) {
+            log.debug("Started reading {} file.", file.getOriginalFilename());
             String line = bufferedReader.readLine();
             List<LstLineModel> lstLines = new ArrayList<>();
             Map<Integer, LstOpcodeAndLine> assemblerArguments = new HashMap<>();
@@ -31,11 +35,8 @@ public class AssemblyLstFileReader {
                 line = bufferedReader.readLine();
             }
 
-            log.info("Finished reading " + file.getOriginalFilename() + " file.");
+            log.debug("Finished reading {} file.", file.getOriginalFilename());
             return new AssemblyLstFile(lstLines, assemblerArguments);
-        } catch (IOException e) {
-            log.warning("Problem with reading File: " + file.getOriginalFilename() + " error message: " + e.getMessage());
-            throw e;
         }
     }
 
@@ -50,7 +51,8 @@ public class AssemblyLstFileReader {
         return String.join(" ", Arrays.asList(array).subList(2, array.length));
     }
 
-    private void mapOperations(String[] line, Map<Integer, LstOpcodeAndLine> assemblerArguments, int lineCounter) {
+    private void mapOperations(String[] line, Map<Integer, LstOpcodeAndLine> assemblerArguments,
+                               int lineCounter) {
         if (line.length > 2 && line[0].length() == 4 && line[1].length() == 4) {
             assemblerArguments.put(
                     Integer.parseInt(line[0], 16),
